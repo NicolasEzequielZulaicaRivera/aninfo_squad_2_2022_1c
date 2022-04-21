@@ -1,0 +1,1 @@
+# aninfo_squad_2_2022_1c

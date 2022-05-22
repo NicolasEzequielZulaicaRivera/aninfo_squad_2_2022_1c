@@ -12,4 +12,4 @@ assignees: ''
 Criterios de aceptación:
 
 - [ ] **Dado que** {condicion}, **cuando** {accion}, **entonces** {consecuencia}
-- [ ] 
+- [ ] **Dado que** {condicion}, **cuando** {accion}, **entonces** {consecuencia}

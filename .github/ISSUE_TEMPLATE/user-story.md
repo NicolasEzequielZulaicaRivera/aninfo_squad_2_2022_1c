@@ -7,7 +7,9 @@ assignees: ''
 
 ---
 
-Como {rol} , quiero {accion} , para {objetivo}
+**Como** {rol}, **quiero** {accion}, **para así** {objetivo}
 
 Criterios de aceptación:
-- [ ] Dado que {condicion} , cuando {accion} , entonces {consecuencia}
+
+- [ ] **Dado que** {condicion}, **cuando** {accion}, **entonces** {consecuencia}
+- [ ] 

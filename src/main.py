@@ -1,27 +1,23 @@
-from typing import Optional
+from fastapi import (
+    FastAPI,
+    Depends,
+)
+from src.app import projects, tasks
+from src.middleware.utils import get_api_key
+from src.postgres.database import Base, engine
 
-from fastapi import FastAPI
-from pydantic import BaseModel
+API_VERSION_PREFIX = "/api/v1"
 
-app = FastAPI()
-
-
-class Item(BaseModel):
-    name: str
-    price: float
-    is_offer: Optional[bool] = None
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+app = FastAPI(
+    title="Projects API",
+    description="API to manage projects module",
+    version="0.0.1",
+    dependencies=[Depends(get_api_key)],
+)
 
 
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_name": item.name, "item_id": item_id}
+Base.metadata.drop_all(engine)
+Base.metadata.create_all(bind=engine)
+
+app.include_router(projects.router, prefix=API_VERSION_PREFIX)
+app.include_router(tasks.router, prefix=API_VERSION_PREFIX)

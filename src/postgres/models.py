@@ -22,6 +22,9 @@ class TaskModel(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, nullable=False)
-    project_id = Column(Integer, ForeignKey("projects.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    project_id = Column(
+        Integer,
+        ForeignKey("projects.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
     project = relationship("ProjectModel", back_populates="tasks")
-

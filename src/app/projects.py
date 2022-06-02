@@ -9,10 +9,7 @@ router = APIRouter(tags=["projects"])
 
 
 @router.post("/projects/", response_model=schemas.ProjectBase)
-def post_project(
-    project: schemas.ProjectPost,
-    pdb: Session = Depends(get_db),
-):
+def post_project(project: schemas.ProjectPost, pdb: Session = Depends(get_db)):
     """Creates a new project"""
 
     new_project = models.ProjectModel(**project.dict())
@@ -26,9 +23,7 @@ def post_project(
 
 
 @router.get("/projects/", response_model=List[schemas.ProjectBase])
-def get_projects(
-    pdb: Session = Depends(get_db),
-):
+def get_projects(pdb: Session = Depends(get_db),):
     """Returns all projects"""
 
     projects = pdb.query(models.ProjectModel).all()
@@ -37,10 +32,7 @@ def get_projects(
 
 
 @router.get("/projects/{project_id}", response_model=schemas.ProjectBase)
-def get_project_by_id(
-    project_id: int,
-    pdb: Session = Depends(get_db),
-):
+def get_project_by_id(project_id: int, pdb: Session = Depends(get_db)):
     """Returns an project by its id or 404 if not found"""
 
     project = pdb.get(models.ProjectModel, project_id)
@@ -75,10 +67,7 @@ def edit_project(
 
 
 @router.delete("/projects/{project_id}")
-def delete_project(
-    project_id: int,
-    pdb: Session = Depends(get_db),
-):
+def delete_project(project_id: int, pdb: Session = Depends(get_db)):
     """Deletes an existing project"""
 
     project = pdb.get(models.ProjectModel, project_id)
@@ -86,4 +75,3 @@ def delete_project(
         raise HTTPException(status_code=404, detail="Project not found")
     pdb.delete(project)
     pdb.commit()
-

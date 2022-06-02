@@ -1,7 +1,4 @@
-from fastapi import (
-    FastAPI,
-    Depends,
-)
+from fastapi import FastAPI, Depends
 from src.app import projects, tasks
 from src.middleware.utils import get_api_key
 from src.postgres.database import Base, engine

@@ -6,5 +6,3 @@ from src.postgres import models
 from typing import List
 
 router = APIRouter(tags=["tasks"])
-
-

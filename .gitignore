@@ -10,6 +10,8 @@
 .idea/**/shelf
 /.idea/
 .vscode
+alembic
+alembic.ini
 
 # Generated files
 .idea/**/contentModel.xml

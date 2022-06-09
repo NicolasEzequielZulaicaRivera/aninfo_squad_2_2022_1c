@@ -12,6 +12,7 @@
 .vscode
 alembic
 alembic.ini
+features/backups
 
 # Generated files
 .idea/**/contentModel.xml

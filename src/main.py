@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from src.app import projects, tasks
+from src.middleware.middleware import apply_middleware
 from src.middleware.utils import get_api_key
 from src.postgres.database import Base, engine
 
@@ -12,6 +13,7 @@ app = FastAPI(
     dependencies=[Depends(get_api_key)],
 )
 
+apply_middleware(app)
 
 Base.metadata.drop_all(engine)
 Base.metadata.create_all(bind=engine)

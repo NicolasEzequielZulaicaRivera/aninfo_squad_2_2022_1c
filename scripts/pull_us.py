@@ -8,7 +8,7 @@ import shutil
 from datetime import datetime
 from dotenv import load_dotenv
 
-
+# If the repo requires authentication:
 # Generate a personal access token from https://github.com/settings/tokens and add it to .env folder
 # with key AUTH_TOKEN
 load_dotenv()
@@ -16,7 +16,7 @@ load_dotenv()
 REPO_OWNER = "NicolasEzequielZulaicaRivera"
 REPO_NAME = "aninfo_tribu_1_2022_1c"
 ISSUES_URL = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/issues"
-#AUTH_TOKEN = os.getenv("AUTH_TOKEN")
+AUTH_TOKEN = os.getenv("AUTH_TOKEN")
 FEATURES_FOLDER = "features"
 FEATURES_BACKUPS_FOLDER = f"{FEATURES_FOLDER}/backups"
 MAX_LINE_LENGTH = 80
@@ -91,13 +91,12 @@ class FileWriter:
             shutil.rmtree(FEATURES_BACKUPS_FOLDER + "/" + backup_folder)
         else:
             files_to_remove = [
-                f for f in os.listdir(f"{FEATURES_BACKUPS_FOLDER}/{backup_folder}")
+                f
+                for f in os.listdir(f"{FEATURES_BACKUPS_FOLDER}/{backup_folder}")
                 if f not in diff_files
             ]
             for file in files_to_remove:
-                os.remove(
-                    f"{FEATURES_BACKUPS_FOLDER}/{backup_folder}/{file}"
-                )
+                os.remove(f"{FEATURES_BACKUPS_FOLDER}/{backup_folder}/{file}")
 
     @staticmethod
     def create_folder_if_not_exists(folder_name):

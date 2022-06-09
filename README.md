@@ -7,6 +7,11 @@
 
 # Módulo de proyectos
 
+## Links
+
+- [🗃️ Squad Drive](https://drive.google.com/drive/folders/1tgJLJsmCotfn_13ujyAJihNR38PKLGJT)
+- [👥 Tribe Repo](https://github.com/NicolasEzequielZulaicaRivera/aninfo_tribu_1_2022_1c)
+
 ## Installing the project
 
 The only dependency required to use this template is [poetry](https://python-poetry.org). The recommended method to install it is through [pip](https://pypi.org/project/pip/).

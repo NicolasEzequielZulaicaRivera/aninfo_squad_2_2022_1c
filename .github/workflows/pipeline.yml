@@ -99,6 +99,9 @@ jobs:
         run: |
           mv heroku-Dockerfile Dockerfile
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        env:
+          HD_API_KEY: ${{secrets.API_KEY}}
+          HD_POSTGRES_URL: ${{secrets.POSTGRES_URL}}
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}

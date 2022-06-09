@@ -1,4 +1,4 @@
-from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.cors import CORSMiddleware
 
 
 def apply_middleware(app):

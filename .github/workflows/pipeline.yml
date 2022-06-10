@@ -39,7 +39,7 @@ jobs:
           flake8 .
           pylint src
 
-  tests_and_coverage:
+  tests:
     runs-on: ubuntu-latest
     steps:
       #----------------------------------------------
@@ -84,14 +84,14 @@ jobs:
       #    run test suite and output coverage file
       #----------------------------------------------
       - name: Test with pytest
-        run: poetry run pytest --cov=./ --cov-report=xml
+        run: poetry run pytest
       #----------------------------------------------
       #             upload coverage stats
       # (requires CODECOV_TOKEN in repository secrets)
       #----------------------------------------------
   deploy_container:
     if: github.ref == 'refs/heads/master'
-    needs: [linting, tests_and_coverage]
+    needs: [linting, tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

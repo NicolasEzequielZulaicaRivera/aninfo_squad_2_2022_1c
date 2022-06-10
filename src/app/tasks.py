@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
-from src.postgres import schemas
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from src.postgres.database import get_db
 from src.postgres import models

@@ -11,4 +11,3 @@ services:
       - ${PORT}:${PORT}
     environment:
       - PORT=${PORT}
-      - API_KEY=${API_KEY}

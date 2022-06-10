@@ -85,10 +85,6 @@ jobs:
       #----------------------------------------------
       - name: Test with pytest
         run: poetry run pytest
-      #----------------------------------------------
-      #             upload coverage stats
-      # (requires CODECOV_TOKEN in repository secrets)
-      #----------------------------------------------
   deploy_container:
     if: github.ref == 'refs/heads/master'
     needs: [linting, tests]
@@ -100,7 +96,6 @@ jobs:
           mv heroku-Dockerfile Dockerfile
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         env:
-          HD_API_KEY: ${{secrets.API_KEY}}
           HD_POSTGRES_URL: ${{secrets.POSTGRES_URL}}
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}

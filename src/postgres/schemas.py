@@ -3,8 +3,23 @@ from typing import List, Optional
 from datetime import datetime
 
 
-class TaskPost(BaseModel):
+class TaskBase(BaseModel):
     name: str
+    description: str
+    initial_date: datetime
+    final_date: datetime
+    estimated_hours: int
+
+    class Config:
+        orm_mode = True
+
+
+class TaskUpdate(BaseModel):
+    name: Optional[str]
+    description: Optional[str]
+    initial_date: Optional[datetime]
+    final_date: Optional[datetime]
+    estimated_hours: Optional[int]
 
     class Config:
         orm_mode = True
@@ -18,9 +33,15 @@ class ProjectInfo(BaseModel):
         orm_mode = True
 
 
-class TaskBase(TaskPost):
+class TaskGet(TaskBase):
     id: int
     project: ProjectInfo
+
+
+class TaskPost(TaskBase):
+    initial_date: datetime
+    final_date: datetime
+    estimated_hours: int
 
     class Config:
         orm_mode = True
@@ -36,9 +57,21 @@ class ProjectPost(BaseModel):
         orm_mode = True
 
 
+class TaskGetProject(BaseModel):
+    id: int
+    name: str
+    description: str
+    initial_date: datetime
+    final_date: datetime
+    estimated_hours: int
+
+    class Config:
+        orm_mode = True
+
+
 class ProjectBase(ProjectPost):
     id: int
-    tasks: Optional[List[TaskBase]]
+    tasks: Optional[List[TaskGetProject]]
 
     class Config:
         orm_mode = True

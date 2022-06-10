@@ -23,7 +23,9 @@ def post_project(project: schemas.ProjectPost, pdb: Session = Depends(get_db)):
 
 
 @router.get("/projects/", response_model=List[schemas.ProjectBase])
-def get_projects(pdb: Session = Depends(get_db),):
+def get_projects(
+    pdb: Session = Depends(get_db),
+):
     """Returns all projects"""
 
     projects = pdb.query(models.ProjectModel).all()
@@ -33,7 +35,7 @@ def get_projects(pdb: Session = Depends(get_db),):
 
 @router.get("/projects/{project_id}", response_model=schemas.ProjectBase)
 def get_project_by_id(project_id: int, pdb: Session = Depends(get_db)):
-    """Returns an project by its id or 404 if not found"""
+    """Returns a project by its id or 404 if not found"""
 
     project = pdb.get(models.ProjectModel, project_id)
     if project is None:

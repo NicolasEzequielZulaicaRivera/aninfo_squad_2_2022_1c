@@ -23,7 +23,9 @@ def post_project(project: schemas.ProjectPost, pdb: Session = Depends(get_db)):
 
 
 @router.get("/projects/", response_model=List[schemas.ProjectBase])
-def get_projects(pdb: Session = Depends(get_db),):
+def get_projects(
+    pdb: Session = Depends(get_db),
+):
     """Returns all projects"""
 
     projects = pdb.query(models.ProjectModel).all()

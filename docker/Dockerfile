@@ -9,7 +9,6 @@ RUN pip install poetry
 WORKDIR /code
 COPY poetry.lock pyproject.toml /code/
 
-
 # install runtime deps
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi

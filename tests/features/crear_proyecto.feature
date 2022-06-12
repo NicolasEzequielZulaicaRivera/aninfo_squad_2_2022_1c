@@ -20,3 +20,7 @@ Feature: Crear proyecto
 	exitosamente, el sistema deberá informar "no se ha podido crear el proyecto" y
 	deberá permitir crearlo nuevamente
 	"""
+	Scenario: Creacion exitosa
+		Given ingrese los datos del proyecto
+		When selecciono la opcion "crear proyecto"
+		Then se debera crear el proyecto con los datos correspondientes

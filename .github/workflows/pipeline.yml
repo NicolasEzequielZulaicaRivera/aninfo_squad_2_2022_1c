@@ -84,7 +84,7 @@ jobs:
       #    run test suite and output coverage file
       #----------------------------------------------
       - name: Test with pytest
-        run: poetry run pytest
+        run: ./scripts/execute-test-container.sh
   deploy_container:
     if: github.ref == 'refs/heads/master'
     needs: [linting, tests]

@@ -17,7 +17,7 @@ REPO_OWNER = "NicolasEzequielZulaicaRivera"
 REPO_NAME = "aninfo_tribu_1_2022_1c"
 ISSUES_URL = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/issues"
 AUTH_TOKEN = os.getenv("AUTH_TOKEN")
-FEATURES_FOLDER = "features"
+FEATURES_FOLDER = "tests/features"
 FEATURES_BACKUPS_FOLDER = f"{FEATURES_FOLDER}/backups"
 MAX_LINE_LENGTH = 80
 
@@ -25,6 +25,9 @@ MAX_LINE_LENGTH = 80
 class NotAUserStory(Exception):
     pass
 
+
+class NotOurModule(Exception):
+    pass
 
 class IssuesJsonList:
     def __init__(self, issues_url):
@@ -121,8 +124,19 @@ class UserStory:
         if not self._check_exist_label_us(issue_json):
             raise NotAUserStory
 
+        if not self._check_exist_label_projects(issue_json):
+            raise NotOurModule
+
         self.title = issue_json["title"]
         self.body = issue_json["body"]
+
+    @staticmethod
+    def _check_exist_label_projects(issue_json):
+        labels = issue_json["labels"]
+        for label in labels:
+            if label["name"] == "Proyectos":
+                return True
+        return False
 
     @staticmethod
     def _check_exist_label_us(issue_json):
@@ -172,7 +186,7 @@ def main():
     for issue_json in issues_json_list:
         try:
             user_story = UserStory(issue_json)
-        except NotAUserStory:
+        except (NotAUserStory, NotOurModule):
             continue
 
         user_stories.append(user_story)

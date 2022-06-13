@@ -1,6 +1,5 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship
-from sqlalchemy import Table
 
 from src.postgres.database import Base
 

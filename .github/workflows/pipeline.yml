@@ -84,7 +84,8 @@ jobs:
       #    run test suite and output coverage file
       #----------------------------------------------
       - name: Test with pytest
-        run: ./scripts/execute-test-container.sh
+        run: ./scripts/execute-test-container.sh |
+        sudo rm -rf ./docker
   deploy_container:
     if: github.ref == 'refs/heads/master'
     needs: [linting, tests]

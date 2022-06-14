@@ -28,6 +28,15 @@ def post_task(
     return new_task
 
 
+@router.get("/tasks/{task_id}", response_model=schemas.TaskBase)
+def get_task(
+    task: models.TaskModel = Depends(task_utils.get_task_by_id),
+):
+    """Get task by id"""
+
+    return task
+
+
 @router.get("/tasks/", response_model=List[schemas.TaskBase])
 def get_tasks(pdb: Session = Depends(get_db)):
     """Returns all tasks"""

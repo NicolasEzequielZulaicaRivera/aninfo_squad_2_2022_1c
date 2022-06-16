@@ -11,7 +11,7 @@ from src.utils import project_utils, task_utils
 router = APIRouter(tags=["tasks"])
 
 
-@router.post("/projects/{project_id}/tasks/", response_model=schemas.TaskBase)
+@router.post("/projects/{project_id}/tasks/", response_model=schemas.TaskGet)
 def post_task(
     task: schemas.TaskPost,
     project: models.ProjectModel = Depends(project_utils.get_project_by_id),
@@ -28,14 +28,14 @@ def post_task(
     return new_task
 
 
-@router.get("/tasks/", response_model=List[schemas.TaskBase])
+@router.get("/tasks/", response_model=List[schemas.TaskGet])
 def get_tasks(pdb: Session = Depends(get_db)):
     """Returns all tasks"""
 
     return pdb.query(models.TaskModel).all()
 
 
-@router.put("/tasks/{task_id}", response_model=schemas.TaskBase)
+@router.put("/tasks/{task_id}", response_model=schemas.TaskGet)
 def edit_task(
     task_update: schemas.TaskUpdate,
     task: models.TaskModel = Depends(task_utils.get_task_by_id),

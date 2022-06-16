@@ -29,6 +29,7 @@ class NotAUserStory(Exception):
 class NotOurModule(Exception):
     pass
 
+
 class IssuesJsonList:
     def __init__(self, issues_url):
         response = requests.get(issues_url)

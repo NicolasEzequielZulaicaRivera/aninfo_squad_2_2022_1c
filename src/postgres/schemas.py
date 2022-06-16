@@ -1,6 +1,6 @@
 from pydantic.main import BaseModel
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, date
 
 
 class TaskBase(BaseModel):
@@ -39,22 +39,41 @@ class TaskGet(TaskBase):
 
 
 class TaskPost(TaskBase):
-    initial_date: datetime
-    final_date: datetime
+    initial_date: date
+    final_date: date
     estimated_hours: int
 
     class Config:
         orm_mode = True
+
+        schema_extra = {
+            "example": {
+                "name": "Actualizar dependencias del proyecto",
+                "description": "Se deben solucionar todos los conflictos existentes entre las dependencias del proyecto",
+                "initial_date": "2020-01-01",
+                "final_date": "2020-01-01",
+                "estimated_hours": 3,
+            }
+        }
 
 
 class ProjectPost(BaseModel):
     name: str
-    initial_date: datetime
-    final_date: datetime
+    initial_date: date
+    final_date: date
     estimated_hours: int
 
     class Config:
         orm_mode = True
+
+        schema_extra = {
+            "example": {
+                "name": "PSA Spring ERP V1.0",
+                "initial_date": "2020-01-01",
+                "final_date": "2020-03-10",
+                "estimated_hours": 150,
+            }
+        }
 
 
 class TaskGetProject(BaseModel):

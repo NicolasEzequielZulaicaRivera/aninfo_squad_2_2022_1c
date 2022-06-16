@@ -13,7 +13,9 @@ class ProjectModel(Base):
     final_date = Column(DateTime, nullable=False)
     estimated_hours = Column(Integer, nullable=False)
 
-    tasks = relationship("TaskModel", back_populates="project")
+    tasks = relationship(
+        "TaskModel", back_populates="project", cascade="all, delete-orphan"
+    )
 
 
 class TaskModel(Base):

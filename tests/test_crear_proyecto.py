@@ -13,8 +13,8 @@ def test_crear_proyecto():
 def set_up_project():
     return {
         "name": "Proyecto 1",
-        "initial_date": "2022-06-12T23:01:25.376Z",
-        "final_date": "2022-06-20T23:01:25.376Z",
+        "initial_date": "2022-06-12",
+        "final_date": "2022-06-20",
         "estimated_hours": 100,
     }
 
@@ -30,6 +30,6 @@ def project_is_created(response):
     project = response.json()
     assert project["id"] == 1
     assert project["name"] == "Proyecto 1"
-    assert project["initial_date"] == "2022-06-12T23:01:25.376000"
-    assert project["final_date"] == "2022-06-20T23:01:25.376000"
+    assert project["initial_date"] == "2022-06-12"
+    assert project["final_date"] == "2022-06-20"
     assert project["estimated_hours"] == 100

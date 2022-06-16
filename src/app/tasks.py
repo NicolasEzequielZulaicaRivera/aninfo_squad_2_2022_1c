@@ -37,7 +37,7 @@ def get_task(
     return task
 
 
-@router.get("/tasks/", response_model=List[schemas.TaskBase])
+@router.get("/tasks/", response_model=List[schemas.TaskGet])
 def get_tasks(pdb: Session = Depends(get_db)):
     """Returns all tasks"""
 

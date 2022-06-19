@@ -70,7 +70,7 @@ class ProjectPost(BaseModel):
             "example": {
                 "name": "PSA Spring ERP V1.0",
                 "initial_date": "2020-01-01",
-                "final_date": "2020-03-10",
+                "final_date": "2020-06-25",
                 "estimated_hours": 150,
             }
         }

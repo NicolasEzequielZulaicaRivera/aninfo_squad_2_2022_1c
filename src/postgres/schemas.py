@@ -6,8 +6,8 @@ from datetime import datetime, date
 class TaskBase(BaseModel):
     name: str
     description: str
-    initial_date: datetime
-    final_date: datetime
+    initial_date: date
+    final_date: date
     estimated_hours: int
 
     class Config:
@@ -17,8 +17,8 @@ class TaskBase(BaseModel):
 class TaskUpdate(BaseModel):
     name: Optional[str]
     description: Optional[str]
-    initial_date: Optional[datetime]
-    final_date: Optional[datetime]
+    initial_date: Optional[date]
+    final_date: Optional[date]
     estimated_hours: Optional[int]
 
     class Config:
@@ -50,9 +50,9 @@ class TaskPost(TaskBase):
             "example": {
                 "name": "Actualizar dependencias del proyecto",
                 "description": "Se deben solucionar todos los conflictos existentes entre las dependencias del proyecto",
-                "initial_date": "2020-01-01",
-                "final_date": "2020-01-01",
-                "estimated_hours": 3,
+                "initial_date": "2020-05-02",
+                "final_date": "2020-06-26",
+                "estimated_hours": 100,
             }
         }
 
@@ -80,8 +80,8 @@ class TaskGetProject(BaseModel):
     id: int
     name: str
     description: str
-    initial_date: datetime
-    final_date: datetime
+    initial_date: date
+    final_date: date
     estimated_hours: int
 
     class Config:
@@ -98,8 +98,8 @@ class ProjectBase(ProjectPost):
 
 class ProjectUpdate(BaseModel):
     name: Optional[str]
-    initial_date: Optional[datetime]
-    final_date: Optional[datetime]
+    initial_date: Optional[date]
+    final_date: Optional[date]
     estimated_hours: Optional[int]
 
     class Config:

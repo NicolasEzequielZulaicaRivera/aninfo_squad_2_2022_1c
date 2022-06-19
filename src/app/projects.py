@@ -17,7 +17,6 @@ def post_project(project: schemas.ProjectPost, pdb: Session = Depends(get_db)):
     pdb.add(new_project)
     pdb.commit()
     pdb.refresh(new_project)
-    print(new_project.final_date)
 
     return new_project
 

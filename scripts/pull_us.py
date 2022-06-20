@@ -66,7 +66,7 @@ class FileWriter:
 
     @staticmethod
     def make_features_backup():
-        if not any(file.endswith(".feature") for file in os.listdir("features")):
+        if not any(file.endswith(".feature") for file in os.listdir(FEATURES_FOLDER)):
             return
 
         now = datetime.now()

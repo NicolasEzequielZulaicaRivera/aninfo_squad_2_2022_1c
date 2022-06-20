@@ -1,6 +1,6 @@
 from pydantic.main import BaseModel
 from typing import List, Optional
-from datetime import datetime, date
+from datetime import date
 
 
 class TaskBase(BaseModel):
@@ -49,7 +49,8 @@ class TaskPost(TaskBase):
         schema_extra = {
             "example": {
                 "name": "Actualizar dependencias del proyecto",
-                "description": "Se deben solucionar todos los conflictos existentes entre las dependencias del proyecto",
+                "description": "Se deben solucionar todos los conflictos existentes entre las"
+                "dependencias del proyecto",
                 "initial_date": "2020-05-02",
                 "final_date": "2020-06-26",
                 "estimated_hours": 100,

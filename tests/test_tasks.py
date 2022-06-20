@@ -56,7 +56,6 @@ def test_get_task_by_id_should_return_task(client):
     )
 
     response = client.get(API_VERSION_PREFIX + "/tasks/1")
-    print(response.json())
     assert response.status_code == 200
     task = response.json()
     assert task["id"] == 1

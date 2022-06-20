@@ -26,5 +26,4 @@ def test_add_employee_to_task_should_return_task_with_employee_id(client):
     response = client.post(
         API_VERSION_PREFIX + f"/tasks/{task_id}/employees/", json={"employee_id": 25}
     )
-    print(response.json())
     assert response.status_code == 200

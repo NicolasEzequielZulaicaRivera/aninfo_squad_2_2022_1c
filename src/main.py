@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from src.app import projects, tasks, employees
 from src.middleware.middleware import apply_middleware
-from src.constants import TESTING, API_VERSION_PREFIX
+from src.constants import API_VERSION_PREFIX
 
 app = FastAPI(
     title="Projects API", description="API to manage projects module", version="0.0.1"

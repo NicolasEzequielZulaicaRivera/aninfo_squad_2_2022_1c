@@ -12,4 +12,3 @@ apply_middleware(app)
 app.include_router(projects.router, prefix=API_VERSION_PREFIX)
 app.include_router(tasks.router, prefix=API_VERSION_PREFIX)
 app.include_router(employees.router, prefix=API_VERSION_PREFIX)
-

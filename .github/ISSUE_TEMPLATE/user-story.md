@@ -7,9 +7,14 @@ assignees: ''
 
 ---
 
-**Como** {rol}, **quiero** {accion}, **para así** {objetivo}
+**Como** {rol}, **quiero** {acción}, **para** {objetivo}
 
-Criterios de aceptación:
+- [ ] **CA 1: {criterio_mvp}**
+**Dado que** {condición}
+**Cuando** {acción}
+**Entonces** {consecuencia}
 
-- [ ] **Dado que** {condicion}, **cuando** {accion}, **entonces** {consecuencia}
-- [ ] **Dado que** {condicion}, **cuando** {accion}, **entonces** {consecuencia}
+- [ ] CA 2: {criterio_no_mvp}
+**Dado que** {condición}
+**Cuando** {acción}
+**Entonces** {consecuencia} (No MVP)

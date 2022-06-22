@@ -1,4 +1,4 @@
-Feature: Visualización diferencia con estimación en Tarea
+Feature: visualizar diferencia con estimacion en tarea
 	"""
 	Como empleado, quiero ver la diferencia entre horas reales y estimadas de una
 	tarea, para poder hacer un seguimiento del desarrollo del proyecto
@@ -31,3 +31,4 @@ Feature: Visualización diferencia con estimación en Tarea
 	posible visualizar la diferencia con las horas estimadas ya que la tarea no
 	tiene una estimación
 	"""
+

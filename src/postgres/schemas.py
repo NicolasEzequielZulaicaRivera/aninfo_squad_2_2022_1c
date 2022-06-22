@@ -4,6 +4,8 @@ from typing import List, Optional
 from datetime import date
 from fastapi import Body, HTTPException, status
 
+from src.utils.common import get_today_date
+
 
 class TaskBase(BaseModel):
     name: str
@@ -18,6 +20,15 @@ class TaskBase(BaseModel):
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail="Initial date must be before final date",
+            )
+        return v
+
+    @validator("initial_date")
+    def check_initial_date_is_not_in_the_past(cls, v):
+        if v < get_today_date():
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Initial date cannot be in the past",
             )
         return v
 
@@ -77,6 +88,15 @@ class ProjectBase(BaseModel):
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail="Initial date must be before final date",
+            )
+        return v
+
+    @validator("initial_date")
+    def check_initial_date_is_not_in_the_past(cls, v):
+        if v < get_today_date():
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"Initial date cannot be in the past (today: {get_today_date()})",
             )
         return v
 

@@ -1,4 +1,4 @@
-Feature: Finalizar tarea
+Feature: finalizar tarea
 	"""
 	Como empleado, quiero finalizar una tarea, para marcarla como finalizada
 

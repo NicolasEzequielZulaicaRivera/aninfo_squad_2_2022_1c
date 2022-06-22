@@ -2,16 +2,17 @@ import requests
 import json
 import os
 import textwrap
-import unidecode
 import filecmp
 import shutil
 from datetime import datetime
-from dotenv import load_dotenv
+import os
+
+# from dotenv import load_dotenv
 
 # If the repo requires authentication:
 # Generate a personal access token from https://github.com/settings/tokens and add it to .env folder
 # with key AUTH_TOKEN
-load_dotenv()
+# load_dotenv()
 
 REPO_OWNER = "NicolasEzequielZulaicaRivera"
 REPO_NAME = "aninfo_tribu_1_2022_1c"
@@ -46,7 +47,7 @@ class FileWriter:
         feature_file_name = FileWriter.make_feature_folder_name(feature_name)
 
         if not os.path.exists(feature_file_name):
-            with open(feature_file_name, "w") as f:
+            with open(os.open(feature_file_name, os.O_CREAT | os.O_RDWR), "w") as f:
                 f.write(user_story.gherkin_feature())
                 f.write(user_story.gherkin_us_as_comment())
         else:
@@ -148,7 +149,17 @@ class UserStory:
         return False
 
     def feature_name(self):
-        return unidecode.unidecode(self.title.replace(" ", "_").lower())
+        self.title = self.title.lower()
+        replacement = {
+            "á": "a",
+            "é": "e",
+            "í": "i",
+            "ó": "o",
+            "ú": "u",
+        }
+        for k, v in replacement.items():
+            self.title = self.title.replace(k, v)
+        return self.title.replace(" ", "_")
 
     def gherkin_feature(self):
         return "Feature: " + self.title + "\n"

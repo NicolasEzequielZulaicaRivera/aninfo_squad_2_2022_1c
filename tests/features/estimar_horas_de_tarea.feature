@@ -1,4 +1,4 @@
-Feature: Estimar horas de Tarea
+Feature: estimar horas de tarea
 	"""
 	Como Empleado, quiero estimar las horas de una tarea, para poder planificar el
 	desarrollo del proyecto

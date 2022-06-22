@@ -3,15 +3,15 @@ from src.postgres import schemas
 from sqlalchemy.orm import Session
 from src.postgres.database import get_db
 from src.postgres import models
+from src import utils
 from typing import List
 
 router = APIRouter(tags=["projects"])
 
 
 @router.post("/projects/", response_model=schemas.ProjectGet)
-def post_project(project: schemas.ProjectBase, pdb: Session = Depends(get_db)):
+def post_project(project: schemas.ProjectBase, pdb: Session = Depends(get_db), today: str = Depends(utils.common.get_today_date)):
     """Creates a new project"""
-
     new_project = models.ProjectModel(**project.dict())
 
     pdb.add(new_project)

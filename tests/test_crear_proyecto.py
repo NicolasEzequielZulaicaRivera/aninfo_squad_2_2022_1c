@@ -13,6 +13,7 @@ def test_crear_proyecto():
 def set_up_project():
     return {
         "name": "Proyecto 1",
+        "description": "Descripcion del proyecto 1",
         "initial_date": "2022-06-12",
         "final_date": "2022-06-20",
         "estimated_hours": 100,
@@ -32,4 +33,3 @@ def project_is_created(response):
     assert project["name"] == "Proyecto 1"
     assert project["initial_date"] == "2022-06-12"
     assert project["final_date"] == "2022-06-20"
-    assert project["estimated_hours"] == 100

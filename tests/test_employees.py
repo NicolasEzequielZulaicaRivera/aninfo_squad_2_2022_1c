@@ -6,6 +6,7 @@ def test_add_employee_to_task_should_return_task_with_employee_id(client):
         API_VERSION_PREFIX + "/projects/",
         json={
             "name": "Proyecto A",
+            "description": "Descripcion del proyecto A",
             "initial_date": "2022-06-12",
             "final_date": "2022-06-20",
             "estimated_hours": 50,

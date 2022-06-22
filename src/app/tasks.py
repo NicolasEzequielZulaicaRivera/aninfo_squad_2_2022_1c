@@ -52,11 +52,10 @@ def edit_task(
 ):
     """Edits an existing task"""
 
-    task_update = task_update.dict()
+    task_update = task_update.dict(exclude_unset=True)
 
     for task_attr in task_update:
-        if task_update[task_attr] is not None:
-            setattr(task, task_attr, task_update[task_attr])
+        setattr(task, task_attr, task_update[task_attr])
 
     pdb.add(task)
     pdb.commit()

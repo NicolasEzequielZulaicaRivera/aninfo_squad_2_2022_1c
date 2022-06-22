@@ -8,7 +8,7 @@ class TaskBase(BaseModel):
     description: str
     initial_date: date
     final_date: date
-    estimated_hours: int
+    estimated_hours: Optional[int]
 
     class Config:
         orm_mode = True
@@ -33,15 +33,24 @@ class ProjectInfo(BaseModel):
         orm_mode = True
 
 
+class EmployeeInfo(BaseModel):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
 class TaskGet(TaskBase):
     id: int
     project: ProjectInfo
+    assigned_employee: Optional[EmployeeInfo]
+    collaborators: List[EmployeeInfo]
 
 
 class TaskPost(TaskBase):
     initial_date: date
     final_date: date
-    estimated_hours: int
+    estimated_hours: Optional[int]
 
     class Config:
         orm_mode = True
@@ -60,9 +69,9 @@ class TaskPost(TaskBase):
 
 class ProjectPost(BaseModel):
     name: str
+    description: str
     initial_date: date
     final_date: date
-    estimated_hours: int
 
     class Config:
         orm_mode = True
@@ -70,9 +79,9 @@ class ProjectPost(BaseModel):
         schema_extra = {
             "example": {
                 "name": "PSA Spring ERP V1.0",
+                "description": "Este proyecto nos permitirá aumentar los ingresos en un 20%",
                 "initial_date": "2020-01-01",
                 "final_date": "2020-06-25",
-                "estimated_hours": 150,
             }
         }
 

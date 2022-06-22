@@ -18,9 +18,9 @@ def test_create_project_should_return_created_project_with_no_tasks(client):
         API_VERSION_PREFIX + "/projects/",
         json={
             "name": "Proyecto secreto",
+            "description": "Descripcion del proyecto",
             "initial_date": "2022-06-12",
             "final_date": "2022-06-20",
-            "estimated_hours": 50,
         },
     )
     assert response.status_code == 200
@@ -29,7 +29,6 @@ def test_create_project_should_return_created_project_with_no_tasks(client):
     assert project["name"] == "Proyecto secreto"
     assert project["initial_date"] == "2022-06-12"
     assert project["final_date"] == "2022-06-20"
-    assert project["estimated_hours"] == 50
     assert project["tasks"] == []
 
 
@@ -38,18 +37,18 @@ def test_can_exist_projects_with_same_name(client):
         API_VERSION_PREFIX + "/projects/",
         json={
             "name": "Proyecto secreto",
+            "description": "Descripcion del proyecto",
             "initial_date": "2022-06-12",
             "final_date": "2022-06-20",
-            "estimated_hours": 50,
         },
     )
     response = client.post(
         API_VERSION_PREFIX + "/projects/",
         json={
             "name": "Proyecto secreto",
+            "description": "Descripcion del proyecto",
             "initial_date": "2022-06-12",
             "final_date": "2022-06-30",
-            "estimated_hours": 50,
         },
     )
     assert response.status_code == 200
@@ -58,7 +57,6 @@ def test_can_exist_projects_with_same_name(client):
     assert project["name"] == "Proyecto secreto"
     assert project["initial_date"] == "2022-06-12"
     assert project["final_date"] == "2022-06-30"
-    assert project["estimated_hours"] == 50
     assert project["tasks"] == []
 
 
@@ -67,9 +65,9 @@ def test_get_project_after_it_was_created(client):
         API_VERSION_PREFIX + "/projects/",
         json={
             "name": "Proyecto secreto",
+            "description": "Descripcion del proyecto",
             "initial_date": "2022-06-12",
             "final_date": "2022-06-20",
-            "estimated_hours": 50,
         },
     )
     response = client.get(API_VERSION_PREFIX + "/projects/1")
@@ -79,7 +77,6 @@ def test_get_project_after_it_was_created(client):
     assert project["name"] == "Proyecto secreto"
     assert project["initial_date"] == "2022-06-12"
     assert project["final_date"] == "2022-06-20"
-    assert project["estimated_hours"] == 50
     assert project["tasks"] == []
 
 
@@ -88,9 +85,9 @@ def test_edit_project_should_return_edited_project(client):
         API_VERSION_PREFIX + "/projects/",
         json={
             "name": "Proyecto secreto",
+            "description": "Descripcion del proyecto",
             "initial_date": "2022-06-12",
             "final_date": "2022-06-20",
-            "estimated_hours": 50,
         },
     )
     response = client.put(
@@ -99,7 +96,6 @@ def test_edit_project_should_return_edited_project(client):
             "name": "Proyecto secreto editado",
             "initial_date": "2022-06-15",
             "final_date": "2022-06-25",
-            "estimated_hours": 100,
         },
     )
     assert response.status_code == 200
@@ -108,7 +104,6 @@ def test_edit_project_should_return_edited_project(client):
     assert project["name"] == "Proyecto secreto editado"
     assert project["initial_date"] == "2022-06-15"
     assert project["final_date"] == "2022-06-25"
-    assert project["estimated_hours"] == 100
     assert project["tasks"] == []
 
 
@@ -117,9 +112,9 @@ def test_delete_project_should_not_return_project(client):
         API_VERSION_PREFIX + "/projects/",
         json={
             "name": "Proyecto",
+            "description": "Descripcion del proyecto",
             "initial_date": "2022-06-12",
             "final_date": "2022-06-20",
-            "estimated_hours": 50,
         },
     )
     response = client.delete(API_VERSION_PREFIX + "/projects/1")

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from src.postgres import schemas
 from sqlalchemy.orm import Session
 from src.postgres.database import get_db
@@ -38,7 +38,9 @@ def get_project_by_id(project_id: int, pdb: Session = Depends(get_db)):
 
     project = pdb.get(models.ProjectModel, project_id)
     if project is None:
-        raise HTTPException(status_code=404, detail="Project not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Project not found"
+        )
 
     return project
 
@@ -53,7 +55,9 @@ def edit_project(
 
     project = pdb.get(models.ProjectModel, project_id)
     if project is None:
-        raise HTTPException(status_code=404, detail="Project not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Project not found"
+        )
 
     project_update = project_update.dict()
 
@@ -73,6 +77,8 @@ def delete_project(project_id: int, pdb: Session = Depends(get_db)):
 
     project = pdb.get(models.ProjectModel, project_id)
     if project is None:
-        raise HTTPException(status_code=404, detail="Project not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Project not found"
+        )
     pdb.delete(project)
     pdb.commit()

@@ -153,7 +153,7 @@ def test_add_collaborator_to_task(client):
         },
     )
     project_id = response.json()["id"]
-    a = client.post(
+    client.post(
         API_VERSION_PREFIX + f"/projects/{project_id}/tasks/",
         json={
             "name": "Actualizar dependencias del proyecto",

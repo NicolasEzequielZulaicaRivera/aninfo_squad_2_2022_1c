@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from src.postgres.database import get_db
 from src.postgres import models, schemas
-from src.postgres.models import task_collaborators_association_table
 
 from src.utils import task_utils, employee_utils
 

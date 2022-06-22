@@ -1,6 +1,8 @@
+from pydantic import validator
 from pydantic.main import BaseModel
 from typing import List, Optional
 from datetime import date
+from fastapi import Body, HTTPException, status
 
 
 class TaskBase(BaseModel):
@@ -8,21 +10,37 @@ class TaskBase(BaseModel):
     description: str
     initial_date: date
     final_date: date
-    estimated_hours: Optional[int]
+    estimated_hours: Optional[int] = Body(None, ge=0)
+
+    @validator("final_date")
+    def check_dates(cls, v, values):
+        if "initial_date" in values and values["initial_date"] > v:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Initial date must be before final date",
+            )
+        return v
 
     class Config:
         orm_mode = True
 
+        schema_extra = {
+            "example": {
+                "name": "Actualizar dependencias del proyecto",
+                "description": "Se deben solucionar todos los conflictos existentes entre las"
+                "dependencias del proyecto",
+                "initial_date": "2020-05-02",
+                "final_date": "2020-06-26",
+            }
+        }
 
-class TaskUpdate(BaseModel):
+
+class TaskUpdate(TaskBase):
     name: Optional[str]
     description: Optional[str]
     initial_date: Optional[date]
     final_date: Optional[date]
-    estimated_hours: Optional[int]
-
-    class Config:
-        orm_mode = True
+    estimated_hours: Optional[int] = Body(None, ge=0)
 
 
 class ProjectInfo(BaseModel):
@@ -47,31 +65,20 @@ class TaskGet(TaskBase):
     collaborators: List[EmployeeInfo]
 
 
-class TaskPost(TaskBase):
-    initial_date: date
-    final_date: date
-    estimated_hours: Optional[int]
-
-    class Config:
-        orm_mode = True
-
-        schema_extra = {
-            "example": {
-                "name": "Actualizar dependencias del proyecto",
-                "description": "Se deben solucionar todos los conflictos existentes entre las"
-                "dependencias del proyecto",
-                "initial_date": "2020-05-02",
-                "final_date": "2020-06-26",
-                "estimated_hours": 100,
-            }
-        }
-
-
-class ProjectPost(BaseModel):
+class ProjectBase(BaseModel):
     name: str
     description: str
     initial_date: date
     final_date: date
+
+    @validator("final_date")
+    def check_dates(cls, v, values):
+        if "initial_date" in values and values["initial_date"] > v:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Initial date must be before final date",
+            )
+        return v
 
     class Config:
         orm_mode = True
@@ -86,31 +93,13 @@ class ProjectPost(BaseModel):
         }
 
 
-class TaskGetProject(BaseModel):
+class ProjectGet(ProjectBase):
     id: int
-    name: str
-    description: str
-    initial_date: date
-    final_date: date
-    estimated_hours: int
-
-    class Config:
-        orm_mode = True
+    tasks: Optional[List[TaskGet]]
 
 
-class ProjectBase(ProjectPost):
-    id: int
-    tasks: Optional[List[TaskGetProject]]
-
-    class Config:
-        orm_mode = True
-
-
-class ProjectUpdate(BaseModel):
+class ProjectUpdate(ProjectBase):
     name: Optional[str]
+    description: Optional[str]
     initial_date: Optional[date]
     final_date: Optional[date]
-    estimated_hours: Optional[int]
-
-    class Config:
-        orm_mode = True

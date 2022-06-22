@@ -94,6 +94,7 @@ def test_edit_project_should_return_edited_project(client):
         API_VERSION_PREFIX + "/projects/1",
         json={
             "name": "Proyecto secreto editado",
+            "description": "Descripcion actualizada",
             "initial_date": "2022-06-15",
             "final_date": "2022-06-25",
         },
@@ -102,6 +103,7 @@ def test_edit_project_should_return_edited_project(client):
     project = response.json()
     assert project["id"] == 1
     assert project["name"] == "Proyecto secreto editado"
+    assert project["description"] == "Descripcion actualizada"
     assert project["initial_date"] == "2022-06-15"
     assert project["final_date"] == "2022-06-25"
     assert project["tasks"] == []

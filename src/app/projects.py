@@ -8,8 +8,8 @@ from typing import List
 router = APIRouter(tags=["projects"])
 
 
-@router.post("/projects/", response_model=schemas.ProjectBase)
-def post_project(project: schemas.ProjectPost, pdb: Session = Depends(get_db)):
+@router.post("/projects/", response_model=schemas.ProjectGet)
+def post_project(project: schemas.ProjectBase, pdb: Session = Depends(get_db)):
     """Creates a new project"""
 
     new_project = models.ProjectModel(**project.dict())
@@ -32,7 +32,7 @@ def get_projects(
     return projects
 
 
-@router.get("/projects/{project_id}", response_model=schemas.ProjectBase)
+@router.get("/projects/{project_id}", response_model=schemas.ProjectGet)
 def get_project_by_id(project_id: int, pdb: Session = Depends(get_db)):
     """Returns a project by its id or 404 if not found"""
 
@@ -45,7 +45,7 @@ def get_project_by_id(project_id: int, pdb: Session = Depends(get_db)):
     return project
 
 
-@router.put("/projects/{project_id}", response_model=schemas.ProjectBase)
+@router.put("/projects/{project_id}", response_model=schemas.ProjectGet)
 def edit_project(
     project_id: int,
     project_update: schemas.ProjectUpdate,

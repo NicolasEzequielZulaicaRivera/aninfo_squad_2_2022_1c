@@ -13,7 +13,7 @@ router = APIRouter(tags=["tasks"])
 
 @router.post("/projects/{project_id}/tasks/", response_model=schemas.TaskGet)
 def post_task(
-    task: schemas.TaskPost,
+    task: schemas.TaskBase,
     project: models.ProjectModel = Depends(project_utils.get_project_by_id),
     pdb: Session = Depends(get_db),
 ):

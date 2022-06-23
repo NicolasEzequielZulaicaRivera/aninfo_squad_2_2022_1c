@@ -1,13 +1,8 @@
-from typing import Optional, Type, List
-from fastapi import Depends, Body, HTTPException, status
+from typing import Optional, List
+from fastapi import Body
 
 from .employee import EmployeeInfo
 from .resource import ResourcePost, ResourceUpdate, ResourceGet, ResourceInfo
-from src.postgres.database import get_db
-from sqlalchemy.orm import Session
-
-from ..postgres.models import ResourceModel
-from ..utils.task_utils import get_task_by_id
 
 
 class TaskExample:

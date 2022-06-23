@@ -16,17 +16,15 @@ def test_fallo_al_finalizar_una_tarea_ya_finalizada():
 
 @given("una tarea sin finalizar", target_fixture="task_post_response")
 def step_impl(client, project, task):
-    response = client.post(
-        f"{API_VERSION_PREFIX}/projects/", json=project
-    )
+    response = client.post(f"{API_VERSION_PREFIX}/projects/", json=project)
 
     project_id = response.json()["id"]
-    return client.post(
-        f"{API_VERSION_PREFIX}/projects/{project_id}/tasks/", json=task
-    )
+    return client.post(f"{API_VERSION_PREFIX}/projects/{project_id}/tasks/", json=task)
 
 
-@given('selecciono la opción "finalizar tarea"', target_fixture="task_finalize_response")
+@given(
+    'selecciono la opción "finalizar tarea"', target_fixture="task_finalize_response"
+)
 @when('selecciono la opción "finalizar tarea"', target_fixture="task_finalize_response")
 def step_impl(client, task_post_response):
     task_id = task_post_response.json()["id"]

@@ -26,3 +26,13 @@ Feature: remover recursos de tarea
 	realizar dicha acción (No MVP)
 
 	"""
+
+	Scenario: Remocion de recurso de tarea en la que colabora
+		Given una tarea en la que colabora el recurso con legajo 5
+		When selecciono la opcion "remover recurso" e ingreso el legajo 5
+		Then el sistema debera indicar que el recurso con legajo 5 ya es colaborador de la tarea
+
+	Scenario: Fallo al remover un recurso no asignado a una tarea
+		Given una tarea sin colaboradores
+		When selecciono la opcion "remover recurso" e ingreso el legajo 5
+		Then el sistema debera indicar que no es posible remover un recurso que no se encuentra asignado a la tarea

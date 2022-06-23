@@ -22,6 +22,8 @@ ignore =
     W0703, # Catching too general exception Exception (broad-except)
     E712, # comparison to True should be 'if cond is True:' or 'if cond:'
     E711, # comparison to None should be 'if cond is not None:'
+    F811, # redefinition of unused 'step_impl' from line 72
+
 select =
     C, # McCabe complexity
     E, # pep8 errors

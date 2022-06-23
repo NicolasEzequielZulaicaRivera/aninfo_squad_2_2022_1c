@@ -19,7 +19,7 @@ class ResourcePost(BaseModel):
     final_date: date
 
     @validator("final_date")
-    def validate_final_date(cls, v, values):
+    def validate_final_date(cls, v, values):  # pylint: disable=no-self-argument,no-self-use
         if values["initial_date"] > v:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,

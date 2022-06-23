@@ -9,12 +9,17 @@ def test_finalizar_proyecto_no_finalizado():
     pass
 
 
-@scenario("../finalizar_proyecto.feature", "Fallo al finalizar un proyecto ya finalizado")
+@scenario(
+    "../finalizar_proyecto.feature", "Fallo al finalizar un proyecto ya finalizado"
+)
 def test_fallo_al_finalizar_un_proyecto_ya_finalizado():
     pass
 
 
-@scenario("../finalizar_proyecto.feature", "Fallo al finalizar un proyecto con tareas no finalizadas")
+@scenario(
+    "../finalizar_proyecto.feature",
+    "Fallo al finalizar un proyecto con tareas no finalizadas",
+)
 def test_fallo_al_finalizar_un_proyecto_con_tareas_no_finalizadas():
     pass
 
@@ -25,10 +30,15 @@ def step_impl(client, headers, project):
 
 
 @given("el proyecto ya está finalizado", target_fixture="project_finalize_response")
-@when('selecciono la opción "finalizar proyecto"', target_fixture="project_finalize_response")
+@when(
+    'selecciono la opción "finalizar proyecto"',
+    target_fixture="project_finalize_response",
+)
 def step_impl(client, project_post_response):
     project_id = project_post_response.json()["id"]
-    return client.put(f"{API_VERSION_PREFIX}/projects/{project_id}", json={"finished": True})
+    return client.put(
+        f"{API_VERSION_PREFIX}/projects/{project_id}", json={"finished": True}
+    )
 
 
 @then('el sistema deberá marcar el proyecto como "finalizado"')
@@ -56,6 +66,8 @@ def step_impl(client, project_post_response, task):
     )
 
 
-@then("el sistema deberá indicar que no es posible finalizar un proyecto con tareas no finalizadas")
+@then(
+    "el sistema deberá indicar que no es posible finalizar un proyecto con tareas no finalizadas"
+)
 def step_impl(project_finalize_response):
     assert project_finalize_response.status_code == 400

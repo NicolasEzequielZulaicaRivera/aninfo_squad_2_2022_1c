@@ -28,3 +28,19 @@ Feature: asignar recursos a una tarea
 	Entonces el sistema deberá indicar que no tengo permisos para realizar dicha
 	acción
 	"""
+
+	Scenario: Asignación de recursos a una tarea sin recursos
+		Given una tarea sin recursos
+		When asigno al recurso con legajo 5 como colaborador de la tarea
+		Then el sistema debera indicar que el recurso con legajo 5 es colaborador de la tarea
+
+	Scenario: Asignación de recursos a una tarea con recursos
+		Given una tarea sin recursos
+		And asigno al recurso con legajo 5 como colaborador de la tarea
+		When asigno al recurso con legajo 6 como colaborador de la tarea
+		Then el sistema debera indicar que el recurso con legajo 6 es colaborador de la tarea
+
+	Scenario: Fallo en la asignación por datos inválidos
+		Given una tarea sin recursos
+		When asigno al recurso con legajo x como colaborador de la tarea
+		Then el sistema debera indicar que el recurso con legajo x es invalido

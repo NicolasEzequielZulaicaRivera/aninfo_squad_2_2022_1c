@@ -28,3 +28,14 @@ Feature: asignar responsable de tarea
 	realizar dicha acción (No MVP)
 
 	"""
+
+	Scenario: Asignar responsable a una tarea sin responsable
+		Given una tarea sin responsable
+		When asigno al recurso con legajo 5 como responsable de la tarea
+		Then el sistema debera indicar que el recurso con legajo 5 se asignó correctamente
+
+	Scenario: Fallo al asignar un responsable a una tarea con responsable
+		Given una tarea sin responsable
+		And asigno al recurso con legajo 3 como responsable de la tarea
+		When intento asignar al recurso con legajo 5 como responsable de la tarea
+		Then el sistema debera indicar que no se puede asignar un responsable a una tarea que ya tiene un responsable

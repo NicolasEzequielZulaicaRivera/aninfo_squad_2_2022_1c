@@ -72,7 +72,9 @@ def edit_project(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Project already finished",
         )
-    if project_update.finished is True and any(task.finished is False for task in project.tasks):
+    if project_update.finished is True and any(
+        task.finished is False for task in project.tasks
+    ):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Project cannot be finished until all tasks are finished",

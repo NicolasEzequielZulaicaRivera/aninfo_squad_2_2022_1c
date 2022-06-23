@@ -4,7 +4,8 @@ from datetime import date
 from fastapi import Body
 from typing import Optional
 
-from src.postgres import models, schemas
+from src.postgres import models
+from src import schemas
 from src.postgres.database import get_db
 
 
@@ -23,7 +24,7 @@ def retrieve_task_post(
     initial_date: date = Body(..., embed=True),
     final_date: date = Body(..., embed=True),
     estimated_hours: Optional[int] = Body(..., ge=0, embed=True),
-) -> schemas.TaskBase:
+):
     if initial_date > final_date:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

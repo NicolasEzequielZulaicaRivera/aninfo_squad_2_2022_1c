@@ -56,12 +56,6 @@ Feature: crear proyecto
 		When selecciono la opción "nuevo proyecto"
 		Then el sistema debera indicar que no fue posible crear el proyecto porque los datos son inválidos
 
-	Scenario: Creacion fallida de proyecto por fecha de inicio anterior a la actual
-		Given quiero crear un proyecto
-		And la fecha de inicio esta en el pasado
-		When selecciono la opción "nuevo proyecto"
-		Then el sistema debera indicar que no fue posible crear el proyecto porque los datos son inválidos
-
 	Scenario: Creacion fallida de proyecto por fecha de finalizacion anterior a la actual
 		Given quiero crear un proyecto
 		And la fecha de finalizacion esta en el pasado

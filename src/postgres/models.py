@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Table
+from sqlalchemy import Column, ForeignKey, Integer, String, Table, Date, Boolean
 from sqlalchemy.orm import relationship
 
 from src.postgres.database import Base
@@ -11,29 +11,28 @@ task_collaborators_association_table = Table(
 )
 
 
-class ProjectModel(Base):
-    __tablename__ = "projects"
+class ResourceModel(Base):
+    __abstract__ = True
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True, nullable=False)
+    name = Column(String, nullable=False)
     description = Column(String, nullable=False)
-    initial_date = Column(DateTime, nullable=False)
-    final_date = Column(DateTime, nullable=False)
+    initial_date = Column(Date, nullable=False)
+    final_date = Column(Date, nullable=False)
+    finished = Column(Boolean, nullable=False, default=False)
+
+
+class ProjectModel(ResourceModel):
+    __tablename__ = "projects"
 
     tasks = relationship(
         "TaskModel", back_populates="project", cascade="all, delete-orphan"
     )
 
 
-class TaskModel(Base):
+class TaskModel(ResourceModel):
     __tablename__ = "tasks"
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True, nullable=False)
-    description = Column(String, nullable=False)
-
-    initial_date = Column(DateTime, nullable=False)
-    final_date = Column(DateTime, nullable=False)
     estimated_hours = Column(Integer, nullable=True)
 
     project_id = Column(

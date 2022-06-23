@@ -1,16 +1,21 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from src.postgres import schemas
+from src import schemas
 from sqlalchemy.orm import Session
 from src.postgres.database import get_db
 from src.postgres import models
 from src import utils
 from typing import List
 
+from src.utils import project_utils
+
 router = APIRouter(tags=["projects"])
 
 
 @router.post("/projects/", response_model=schemas.ProjectGet)
-def post_project(project: schemas.ProjectBase, pdb: Session = Depends(get_db), today: str = Depends(utils.common.get_today_date)):
+def post_project(
+    project: schemas.ProjectPost,
+    pdb: Session = Depends(get_db),
+):
     """Creates a new project"""
     new_project = models.ProjectModel(**project.dict())
 
@@ -47,23 +52,35 @@ def get_project_by_id(project_id: int, pdb: Session = Depends(get_db)):
 
 @router.put("/projects/{project_id}", response_model=schemas.ProjectGet)
 def edit_project(
-    project_id: int,
     project_update: schemas.ProjectUpdate,
+    project: models.ProjectModel = Depends(project_utils.get_project_by_id),
     pdb: Session = Depends(get_db),
 ):
     """Edits an existing project"""
 
-    project = pdb.get(models.ProjectModel, project_id)
-    if project is None:
+    initial_date = project_update.initial_date or project.initial_date
+    final_date = project_update.final_date or project.final_date
+
+    if initial_date > final_date:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Project not found"
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Initial date must be before final date",
         )
 
-    project_update = project_update.dict()
+    if project_update.finished is True and project.finished is True:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Project already finished",
+        )
+    if project_update.finished is True and any(task.finished is False for task in project.tasks):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Project cannot be finished until all tasks are finished",
+        )
 
+    project_update = project_update.dict(exclude_unset=True)
     for project_attr in project_update:
-        if project_update[project_attr] is not None:
-            setattr(project, project_attr, project_update[project_attr])
+        setattr(project, project_attr, project_update[project_attr])
 
     pdb.add(project)
     pdb.commit()

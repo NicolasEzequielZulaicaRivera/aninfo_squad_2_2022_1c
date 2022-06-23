@@ -6,12 +6,12 @@ from src.constants import API_VERSION_PREFIX
 from tests.features.steps.test_crear_proyecto import headers, project
 
 
-@scenario('../crear_tarea.feature', 'Crear tarea en proyecto')
+@scenario("../crear_tarea.feature", "Crear tarea en proyecto")
 def test_crear_tarea_en_proyecto():
     pass
 
 
-@scenario('../crear_tarea.feature', "Creacion fallida de tarea en proyecto")
+@scenario("../crear_tarea.feature", "Creacion fallida de tarea en proyecto")
 def test_crear_tarea_en_proyecto_fallida():
     pass
 
@@ -19,8 +19,8 @@ def test_crear_tarea_en_proyecto_fallida():
 @pytest.fixture
 def task():
     return {
-        "name": "Task 1",
-        "description": "Task de prueba",
+        "name": "Tarea 1",
+        "description": "Tarea de prueba",
         "initial_date": str(date.today()),
         "final_date": str(date.today()),
     }
@@ -59,7 +59,9 @@ def step_impl(task, final_date):
 @when('selecciono la opcion "nueva tarea"', target_fixture="task_post_response")
 def response(client, headers, task, project_post_response):
     project_id = project_post_response.json()["id"]
-    return client.post(f"{API_VERSION_PREFIX}/projects/{project_id}/tasks/", json=task, headers=headers)
+    return client.post(
+        f"{API_VERSION_PREFIX}/projects/{project_id}/tasks/", json=task, headers=headers
+    )
 
 
 @then("se debera crear la tarea con los datos ingresados")
@@ -81,7 +83,8 @@ def step_impl(task):
     task["final_date"] = ""
 
 
-@then("el sistema debera informar que no se pudo crear la tarea, y debera permitir crearla nuevamente")
+@then(
+    "el sistema debera informar que no se pudo crear la tarea, y debera permitir crearla nuevamente"
+)
 def step_impl(task_post_response):
     assert task_post_response.status_code == 422
-

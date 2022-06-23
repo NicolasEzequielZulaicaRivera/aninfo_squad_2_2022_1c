@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from src.postgres.database import get_db
 from src.postgres import models
 from typing import List
-from src.postgres import schemas
+from src import schemas
 
 
 from src.utils import project_utils, task_utils
@@ -13,7 +13,7 @@ router = APIRouter(tags=["tasks"])
 
 @router.post("/projects/{project_id}/tasks/", response_model=schemas.TaskGet)
 def post_task(
-    task: schemas.TaskBase,
+    task: schemas.TaskPost,
     project: models.ProjectModel = Depends(project_utils.get_project_by_id),
     pdb: Session = Depends(get_db),
 ):
@@ -51,6 +51,20 @@ def edit_task(
     pdb: Session = Depends(get_db),
 ):
     """Edits an existing task"""
+
+    initial_date = task_update.initial_date or task.initial_date
+    final_date = task_update.final_date or task.final_date
+
+    if initial_date > final_date:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Initial date cannot be greater than final date",
+        )
+    if task_update.finished is True and task.finished is True:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Task already finished",
+        )
 
     task_update = task_update.dict(exclude_unset=True)
 

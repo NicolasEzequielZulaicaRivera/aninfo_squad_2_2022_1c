@@ -24,3 +24,20 @@ Feature: finalizar proyecto
 	Entonces el sistema deberá indicar que no tengo permisos para realizar dicha
 	acción
 	"""
+
+	Scenario: Finalizar proyecto no finalizado
+		Given un proyecto creado
+		When selecciono la opción "finalizar proyecto"
+		Then el sistema deberá marcar el proyecto como "finalizado"
+
+	Scenario: Fallo al finalizar un proyecto ya finalizado
+		Given un proyecto creado
+		And el proyecto ya está finalizado
+		When selecciono la opción "finalizar proyecto"
+		Then el sistema deberá indicar que no es posible finalizar un proyecto ya finalizado
+
+	Scenario: Fallo al finalizar un proyecto con tareas no finalizadas
+		Given un proyecto creado
+		And el proyecto tiene tareas no finalizadas
+		When selecciono la opción "finalizar proyecto"
+		Then el sistema deberá indicar que no es posible finalizar un proyecto con tareas no finalizadas

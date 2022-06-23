@@ -11,13 +11,11 @@ def test_create_project():
     pass
 
 
-@scenario("../crear_proyecto.feature", "Creacion fallida de proyecto por fechas de inicio y finalizacion inválidas")
+@scenario(
+    "../crear_proyecto.feature",
+    "Creacion fallida de proyecto por fechas de inicio y finalizacion inválidas",
+)
 def test_create_project_with_invalid_dates_should_fail():
-    pass
-
-
-@scenario("../crear_proyecto.feature", "Creacion fallida de proyecto por fecha de inicio anterior a la actual")
-def test_create_project_with_invalid_start_date_should_fail():
     pass
 
 
@@ -87,14 +85,11 @@ def step_imp(client, headers, response, project):
     assert returned_project["final_date"] == project["final_date"]
 
 
-@then("el sistema debera indicar que no fue posible crear el proyecto porque los datos son inválidos")
+@then(
+    "el sistema debera indicar que no fue posible crear el proyecto porque los datos son inválidos"
+)
 def step_impl(response):
     assert response.status_code == 422
-
-
-@given("la fecha de inicio esta en el pasado")
-def step_impl(project):
-    project["initial_date"] = str(TODAY_DATE - timedelta(days=1))
 
 
 @given("la fecha de finalizacion esta en el pasado")

@@ -97,7 +97,7 @@ def test_edit_task_by_id_should_return_task(client):
             "description": "Actualizar infraestructura del proyecto",
             "initial_date": "2022-06-20",
             "final_date": "2022-06-23",
-            "estimated_hours": 10,
+            "estimated_hours": None,
         },
     )
 
@@ -107,7 +107,7 @@ def test_edit_task_by_id_should_return_task(client):
     assert updated_task["name"] == "Actualizar dependencias del proyecto - actualizado"
     assert updated_task["initial_date"] == "2022-06-20"
     assert updated_task["final_date"] == "2022-06-23"
-    assert updated_task["estimated_hours"] == 10
+    assert updated_task["estimated_hours"] is None
     assert updated_task["project"]["id"] == 1
     assert updated_task["project"]["name"] == "Proyecto A"
     assert updated_task["collaborators"] == []

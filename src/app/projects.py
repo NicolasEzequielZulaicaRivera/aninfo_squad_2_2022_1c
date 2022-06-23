@@ -11,7 +11,7 @@ from src.utils import project_utils
 router = APIRouter(tags=["projects"])
 
 
-@router.post("/projects/", response_model=schemas.ProjectGet)
+@router.post("/projects/", response_model=schemas.ProjectGetById)
 def post_project(
     project: schemas.ProjectPost,
     pdb: Session = Depends(get_db),
@@ -34,6 +34,14 @@ def get_projects(
 
     projects = pdb.query(models.ProjectModel).all()
 
+    for project in projects:
+        project.tasks_amount = len(project.tasks)
+        collaborators = set()
+        for task in project.tasks:
+            collaborators.update(task.collaborators)
+
+        project.collaborators_amount = len(set(collaborators))
+
     return projects
 
 
@@ -50,7 +58,7 @@ def get_project_by_id(project_id: int, pdb: Session = Depends(get_db)):
     return project
 
 
-@router.put("/projects/{project_id}", response_model=schemas.ProjectGet)
+@router.put("/projects/{project_id}", response_model=schemas.ProjectGetById)
 def edit_project(
     project_update: schemas.ProjectUpdate,
     project: models.ProjectModel = Depends(project_utils.get_project_by_id),

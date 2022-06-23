@@ -37,12 +37,9 @@ class ProjectUpdate(ResourceUpdate, ProjectPostExample):
 
 
 class ProjectGet(ResourceGet, ProjectGetExample):
-    from .task import TaskInfo
-
-    tasks: List[TaskInfo]
+    collaborators_amount: int
+    tasks_amount: int
 
 
 class ProjectGetById(ResourceGet):
-    from .task import TaskGet
-
     tasks: List[TaskGetProjectById]

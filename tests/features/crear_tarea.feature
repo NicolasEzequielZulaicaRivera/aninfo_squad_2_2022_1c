@@ -74,3 +74,17 @@ Feature: crear tarea
 		And la tarea no puede crearse exitosamente
 		When selecciono la opcion "nueva tarea"
 		Then el sistema debera informar que no se pudo crear la tarea, y debera permitir crearla nuevamente
+
+	Scenario: Fallo en la creacion por fecha de incio posterior a la fecha de finalizacion
+		Given quiero crear una tarea en un proyecto
+		And la fecha de inicio de la tarea es 01/01/2020
+		And la fecha de finalizacion de la tarea es 01/01/2019
+		When selecciono la opcion "nueva tarea"
+		Then el sistema debera informar que no se pudo crear la tarea, y debera permitir crearla nuevamente
+
+	Scenario: Fallo en la creacion por fecha de inicio posterior a la fecha de finalizacion del proyecto
+		Given quiero crear una tarea en un proyecto
+		And la fecha de inicio de la tarea es 01/01/2025
+		And la fecha de finalizacion de la tarea es 01/05/2025
+		When selecciono la opcion "nueva tarea"
+		Then el sistema debera informar que no se pudo crear la tarea, y debera permitir crearla nuevamente

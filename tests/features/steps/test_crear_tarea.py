@@ -16,13 +16,29 @@ def test_crear_tarea_en_proyecto_fallida():
     pass
 
 
+@scenario(
+    "../crear_tarea.feature",
+    "Fallo en la creacion por fecha de incio posterior a la fecha de finalizacion",
+)
+def test_fallo_en_la_creacion_por_fecha_de_inicio_posterior_a_la_fecha_de_finalizacion():
+    pass
+
+
+@scenario(
+    "../crear_tarea.feature",
+    "Fallo en la creacion por fecha de inicio posterior a la fecha de finalizacion del proyecto",
+)
+def test_fallo_en_la_creacion_por_fecha_de_inicio_posterior_a_la_fecha_de_finalizacion_del_proyecto():
+    pass
+
+
 @pytest.fixture
 def task():
     return {
         "name": "Tarea 1",
         "description": "Tarea de prueba",
-        "initial_date": str(date.today()),
-        "final_date": str(date.today()),
+        "initial_date": str(date(2022, 6, 22)),
+        "final_date": str(date(2022, 6, 22)),
     }
 
 

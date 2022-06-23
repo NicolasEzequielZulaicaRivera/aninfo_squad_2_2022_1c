@@ -19,6 +19,12 @@ def post_task(
 ):
     """Creates a new task"""
 
+    if task.initial_date > project.final_date:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Initial date is greater than final date of project",
+        )
+
     new_task = models.TaskModel(**task.dict(), project=project)
 
     pdb.add(new_task)

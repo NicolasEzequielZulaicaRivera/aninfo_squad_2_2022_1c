@@ -30,10 +30,22 @@ class TaskUpdate(ResourceUpdate, TaskExample):
     estimated_hours: Optional[int] = Body(None, ge=0)
 
 
-class TaskGet(ResourceGet):
-    from .project import ProjectInfo
+class ProjectInfo(ResourceInfo):
+    id: int
+    name: str
 
+    class Config:
+        orm_mode = True
+
+
+class TaskGet(ResourceGet):
     project: ProjectInfo
+    assigned_employee: Optional[EmployeeInfo]
+    collaborators: List[EmployeeInfo]
+    estimated_hours: Optional[int]
+
+
+class TaskGetProjectById(ResourceGet):
     assigned_employee: Optional[EmployeeInfo]
     collaborators: List[EmployeeInfo]
     estimated_hours: Optional[int]

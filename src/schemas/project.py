@@ -1,6 +1,6 @@
 from typing import List
-from .task import TaskInfo
-from src.schemas.resource import ResourcePost, ResourceUpdate, ResourceGet, ResourceInfo
+from src.schemas.resource import ResourcePost, ResourceUpdate, ResourceGet
+from src.schemas.task import TaskGetProjectById
 
 
 class ProjectPostExample:
@@ -28,14 +28,6 @@ class ProjectGetExample:
         }
 
 
-class ProjectInfo(ResourceInfo):
-    id: int
-    name: str
-
-    class Config:
-        orm_mode = True
-
-
 class ProjectPost(ResourcePost, ProjectPostExample):
     pass
 
@@ -45,4 +37,12 @@ class ProjectUpdate(ResourceUpdate, ProjectPostExample):
 
 
 class ProjectGet(ResourceGet, ProjectGetExample):
+    from .task import TaskInfo
+
     tasks: List[TaskInfo]
+
+
+class ProjectGetById(ResourceGet):
+    from .task import TaskGet
+
+    tasks: List[TaskGetProjectById]

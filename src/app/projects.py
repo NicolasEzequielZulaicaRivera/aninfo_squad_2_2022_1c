@@ -37,7 +37,7 @@ def get_projects(
     return projects
 
 
-@router.get("/projects/{project_id}", response_model=schemas.ProjectGet)
+@router.get("/projects/{project_id}", response_model=schemas.ProjectGetById)
 def get_project_by_id(project_id: int, pdb: Session = Depends(get_db)):
     """Returns a project by its id or 404 if not found"""
 

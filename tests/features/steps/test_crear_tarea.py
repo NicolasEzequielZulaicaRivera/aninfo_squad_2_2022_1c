@@ -3,7 +3,7 @@ from pytest_bdd import scenario, given, when, then, parsers
 import pytest
 
 from src.constants import API_VERSION_PREFIX
-from tests.features.steps.test_crear_proyecto import headers, project
+from tests.features.steps.test_crear_proyecto import project
 
 
 @scenario("../crear_tarea.feature", "Crear tarea en proyecto")
@@ -32,6 +32,13 @@ def test_fallo_en_la_creacion_por_fecha_de_inicio_posterior_a_la_fecha_de_finali
     pass
 
 
+@scenario(
+    "../crear_tarea.feature", "Solicitud de datos de creación de tarea en proyecto"
+)
+def test_crear_tarea_con_datos_vacios_en_proyecto():
+    pass
+
+
 @pytest.fixture
 def task():
     return {
@@ -43,8 +50,8 @@ def task():
 
 
 @given("un proyecto creado", target_fixture="project_post_response")
-def step_impl(client, headers, project):
-    return client.post(f"{API_VERSION_PREFIX}/projects/", json=project, headers=headers)
+def step_impl(client, project):
+    return client.post(f"{API_VERSION_PREFIX}/projects/", json=project)
 
 
 @given("quiero crear una tarea en un proyecto")
@@ -73,19 +80,17 @@ def step_impl(task, final_date):
 
 
 @when('selecciono la opcion "nueva tarea"', target_fixture="task_post_response")
-def response(client, headers, task, project_post_response):
+def response(client, task, project_post_response):
     project_id = project_post_response.json()["id"]
-    return client.post(
-        f"{API_VERSION_PREFIX}/projects/{project_id}/tasks/", json=task, headers=headers
-    )
+    return client.post(f"{API_VERSION_PREFIX}/projects/{project_id}/tasks/", json=task)
 
 
 @then("se debera crear la tarea con los datos ingresados")
-def step_impl(client, headers, task_post_response, task):
+def step_impl(client, task_post_response, task):
     assert task_post_response.status_code == 200
     task_id = task_post_response.json()["id"]
 
-    response = client.get(f"{API_VERSION_PREFIX}/tasks/{task_id}", headers=headers)
+    response = client.get(f"{API_VERSION_PREFIX}/tasks/{task_id}")
     returned_task = response.json()
     assert response.status_code == 200
     assert returned_task["name"] == task["name"]
@@ -101,6 +106,18 @@ def step_impl(task):
 
 @then(
     "el sistema debera informar que no se pudo crear la tarea, y debera permitir crearla nuevamente"
+)
+def step_impl(task_post_response):
+    assert task_post_response.status_code == 422
+
+
+@given("quiero crear una tarea en un proyecto con datos vacios", target_fixture="task")
+def step_impl():
+    return {}
+
+
+@then(
+    "el sistema me solicitará ingresar el nombre de la tarea, descripción y fecha de finalización"
 )
 def step_impl(task_post_response):
     assert task_post_response.status_code == 422

@@ -25,9 +25,13 @@ Feature: asignar responsable de tarea
 	tarea,
 	Cuando selecciono la opción "asignar responsable",
 	Entonces el sistema deberá indicar que no tengo los permisos necesarios para
-	realizar dicha acción (No MVP)
+	realizar dicha acción
 
 	"""
+	Scenario: Solicitud de datos del responsable a asignar
+		Given una tarea sin responsable
+		When intento asignar a un recurso sin legajo como responsable de la tarea
+		Then el sistema debera solicitar el legajo del empleado que quiero hacer responsable de la tarea
 
 	Scenario: Asignar responsable a una tarea sin responsable
 		Given una tarea sin responsable

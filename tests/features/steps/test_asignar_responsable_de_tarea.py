@@ -20,6 +20,14 @@ def test_fallo_al_asignar_un_responsable_a_una_tarea_con_responsable():
     pass
 
 
+@scenario(
+    "../asignar_responsable_de_tarea.feature",
+    "Solicitud de datos del responsable a asignar",
+)
+def test_solicitud_de_datos_del_responsable_a_asignar():
+    pass
+
+
 @given("una tarea sin responsable", target_fixture="task_post_response")
 def step_impl(client, task, project):
     response = client.post(f"{API_VERSION_PREFIX}/projects/", json=project)
@@ -82,3 +90,19 @@ def step_impl(client, task_post_response):
 )
 def step_impl(task_assign_employee_response):
     assert task_assign_employee_response.status_code == 409
+
+
+@when(
+    "intento asignar a un recurso sin legajo como responsable de la tarea",
+    target_fixture="task_assign_employee_response",
+)
+def step_impl(client, task_post_response):
+    task_id = task_post_response.json()["id"]
+    return client.post(f"{API_VERSION_PREFIX}/tasks/{task_id}/employees/", json={})
+
+
+@then(
+    "el sistema debera solicitar el legajo del empleado que quiero hacer responsable de la tarea"
+)
+def step_impl(task_assign_employee_response):
+    assert task_assign_employee_response.status_code == 422

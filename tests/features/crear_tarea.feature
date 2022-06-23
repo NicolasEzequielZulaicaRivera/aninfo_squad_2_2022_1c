@@ -60,6 +60,11 @@ Feature: crear tarea
 	Background:
 		Given un proyecto creado
 
+	Scenario: Solicitud de datos de creación de tarea en proyecto
+		Given quiero crear una tarea en un proyecto con datos vacios
+		When selecciono la opcion "nueva tarea"
+		Then el sistema me solicitará ingresar el nombre de la tarea, descripción y fecha de finalización
+
 	Scenario: Crear tarea en proyecto
 		Given quiero crear una tarea en un proyecto
 		And el nombre de la tarea es Tarea 1

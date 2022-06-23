@@ -1,5 +1,5 @@
 from pytest_bdd import scenario, given, when, then
-from tests.features.steps.test_crear_proyecto import headers, project
+from tests.features.steps.test_crear_proyecto import project
 from tests.features.steps.test_crear_tarea import task
 from src.constants import API_VERSION_PREFIX
 
@@ -25,8 +25,8 @@ def test_fallo_al_finalizar_un_proyecto_con_tareas_no_finalizadas():
 
 
 @given("un proyecto creado", target_fixture="project_post_response")
-def step_impl(client, headers, project):
-    return client.post(f"{API_VERSION_PREFIX}/projects/", json=project, headers=headers)
+def step_impl(client, project):
+    return client.post(f"{API_VERSION_PREFIX}/projects/", json=project)
 
 
 @given("el proyecto ya está finalizado", target_fixture="project_finalize_response")

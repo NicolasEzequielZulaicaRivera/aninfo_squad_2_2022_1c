@@ -41,6 +41,11 @@ Feature: crear proyecto
 
 	"""
 
+	Scenario: Solicitud de datos durante la creación
+		Given quiero crear un proyecto sin datos
+		When selecciono la opción "nuevo proyecto"
+		Then el sistema me solicitará el ingreso del nombre del proyecto, descripción, fecha de inicio y fecha de finalización
+
 	Scenario: Creacion exitosa de proyecto
 		Given quiero crear un proyecto llamado Proyecto 1
 		And la descripcion es Proyecto de prueba

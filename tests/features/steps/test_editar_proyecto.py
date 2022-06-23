@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from pytest_bdd import scenario, given, when, then, parsers
-from tests.features.steps.test_crear_proyecto import headers, project
+from tests.features.steps.test_crear_proyecto import project
 from src.constants import API_VERSION_PREFIX
 
 
@@ -28,18 +28,14 @@ def test_cambio_de_la_fecha_de_finalizacion_del_proyecto():
 
 
 @given("un proyecto creado", target_fixture="project_post_response")
-def step_impl(client, headers, project):
-    return client.post(f"{API_VERSION_PREFIX}/projects/", json=project, headers=headers)
+def step_impl(client, project):
+    return client.post(f"{API_VERSION_PREFIX}/projects/", json=project)
 
 
 @when(parsers.parse("cambio el nombre del proyecto a {new_name}"))
-def step_impl(client, project, new_name, project_post_response, headers):
+def step_impl(client, project, new_name, project_post_response):
     project_id = project_post_response.json()["id"]
-    client.put(
-        f"{API_VERSION_PREFIX}/projects/{project_id}",
-        json={"name": new_name},
-        headers=headers,
-    )
+    client.put(f"{API_VERSION_PREFIX}/projects/{project_id}", json={"name": new_name})
 
 
 @then(parsers.parse("el nombre del proyecto cambió a {new_name}"))

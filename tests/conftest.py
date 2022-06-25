@@ -1,4 +1,5 @@
 import time
+from datetime import date
 
 import pytest
 from fastapi.testclient import TestClient
@@ -57,3 +58,26 @@ def client(session):
     app.dependency_overrides[get_db] = override_get_db
 
     yield TestClient(app)
+
+
+# We set up our BDD test's fixtures here, so they can be used in all tests.
+
+
+@pytest.fixture
+def project():
+    return {
+        "name": "Proyecto de prueba",
+        "description": "Proyecto de prueba",
+        "initial_date": str(date(2022, 6, 22)),
+        "final_date": str(date(2022, 6, 22)),
+    }
+
+
+@pytest.fixture
+def task():
+    return {
+        "name": "Tarea 1",
+        "description": "Tarea de prueba",
+        "initial_date": str(date(2022, 6, 22)),
+        "final_date": str(date(2022, 6, 22)),
+    }

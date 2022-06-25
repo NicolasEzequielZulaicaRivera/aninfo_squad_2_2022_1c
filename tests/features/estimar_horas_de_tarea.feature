@@ -9,7 +9,7 @@ Feature: estimar horas de tarea
 	Entonces el sistema deberá agregar la estimación de horas a la tarea
 
 	- CA 2: Fallo al agregar una estimación de horas a una tarea con estimación
-	Dado que quiro agregar una estimación de horas a una tarea con estimación
+	Dado que quiero agregar una estimación de horas a una tarea con estimación
 	Cuando intento agregar una estimación de horas
 	Entonces el sistema deberá indicar que no es posible agregar una estimación a
 	una tarea que ya tiene una estimación, sino que se debe modificar la estimación
@@ -47,3 +47,16 @@ Feature: estimar horas de tarea
 	Cuando elimino la estimación de horas
 	Entonces el sistema deberá eliminar la estimación de horas de la tarea
 	"""
+
+	Background:
+		Given un proyecto creado
+
+	Scenario: Agregar estimación de horas
+		Given una tarea sin estimacion
+		When agrego una estimación de 40 horas a la tarea
+		Then el sistema deberá agregar la estimación de 40 horas a la tarea
+
+	Scenario: Fallo al agregar una estimación de horas a una tarea con estimación
+		Given una tarea con estimacion de 40 horas
+		When agrego una estimación de 20 horas a la tarea
+		Then el sistema deberá indicar que no es posible agregar una estimación a una tarea que ya tiene una estimación

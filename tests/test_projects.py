@@ -99,7 +99,6 @@ def test_edit_project_should_return_edited_project(client):
             "final_date": "2022-06-25",
         },
     )
-    print(response.json())
     assert response.status_code == 200
     project = response.json()
     assert project["id"] == 1

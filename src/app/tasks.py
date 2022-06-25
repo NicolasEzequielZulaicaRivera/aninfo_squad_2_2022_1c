@@ -66,10 +66,17 @@ def edit_task(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Initial date cannot be greater than final date",
         )
+
     if task_update.finished is True and task.finished is True:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Task already finished",
+        )
+
+    if task.estimated_hours is not None and task_update.estimated_hours is not None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Can not edit estimated hours of a task with estimated hours already set",
         )
 
     task_update = task_update.dict(exclude_unset=True)

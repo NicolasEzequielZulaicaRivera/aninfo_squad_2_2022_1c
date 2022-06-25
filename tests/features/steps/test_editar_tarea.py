@@ -4,7 +4,7 @@ from pytest_bdd import scenario, given, when, then, parsers
 
 from src.constants import API_VERSION_PREFIX
 from tests.features.steps.test_crear_tarea import task
-from tests.features.steps.test_crear_proyecto import headers, project
+from tests.features.steps.test_crear_proyecto import project
 
 
 @scenario("../editar_tarea.feature", "Edicion del nombre de la tarea")
@@ -33,24 +33,16 @@ def test_fallo_al_editar_una_tarea_por_fechas_invalidas():
 
 
 @given("una tarea", target_fixture="task_post_response")
-def step_impl(client, task, project, headers):
-    response = client.post(
-        f"{API_VERSION_PREFIX}/projects/", json=project, headers=headers
-    )
+def step_impl(client, task, project):
+    response = client.post(f"{API_VERSION_PREFIX}/projects/", json=project)
     project_id = response.json()["id"]
-    return client.post(
-        f"{API_VERSION_PREFIX}/projects/{project_id}/tasks/", json=task, headers=headers
-    )
+    return client.post(f"{API_VERSION_PREFIX}/projects/{project_id}/tasks/", json=task)
 
 
 @when(parsers.parse("cambio el nombre de la tarea a {new_name}"))
-def step_impl(client, task_post_response, new_name, headers):
+def step_impl(client, task_post_response, new_name):
     task_id = task_post_response.json()["id"]
-    client.put(
-        f"{API_VERSION_PREFIX}/tasks/{task_id}",
-        json={"name": new_name},
-        headers=headers,
-    )
+    client.put(f"{API_VERSION_PREFIX}/tasks/{task_id}", json={"name": new_name})
 
 
 @then(parsers.parse("el nombre de la tarea cambió a {new_name}"))
@@ -61,12 +53,11 @@ def step_impl(client, new_name, task_post_response):
 
 
 @when(parsers.parse("cambio la descripcion de la tarea a {new_description}"))
-def step_impl(client, task_post_response, new_description, headers):
+def step_impl(client, task_post_response, new_description):
     task_id = task_post_response.json()["id"]
     client.put(
         f"{API_VERSION_PREFIX}/tasks/{task_id}",
         json={"description": new_description},
-        headers=headers,
     )
 
 
@@ -78,13 +69,11 @@ def step_impl(client, new_description, task_post_response):
 
 
 @when(parsers.parse("cambio la fecha de inicio de la tarea a {new_initial_date}"))
-def step_impl(client, task_post_response, new_initial_date, headers):
+def step_impl(client, task_post_response, new_initial_date):
     task_id = task_post_response.json()["id"]
     new_initial_date = str(datetime.strptime(new_initial_date, "%d/%m/%Y").date())
     client.put(
-        f"{API_VERSION_PREFIX}/tasks/{task_id}",
-        json={"initial_date": new_initial_date},
-        headers=headers,
+        f"{API_VERSION_PREFIX}/tasks/{task_id}", json={"initial_date": new_initial_date}
     )
 
 
@@ -100,13 +89,11 @@ def step_impl(client, new_initial_date, task_post_response):
     parsers.parse("cambio la fecha de finalizacion de la tarea a {new_final_date}"),
     target_fixture="task_update_final_date_response",
 )
-def step_impl(client, task_post_response, new_final_date, headers):
+def step_impl(client, task_post_response, new_final_date):
     task_id = task_post_response.json()["id"]
     new_final_date = str(datetime.strptime(new_final_date, "%d/%m/%Y").date())
     return client.put(
-        f"{API_VERSION_PREFIX}/tasks/{task_id}",
-        json={"final_date": new_final_date},
-        headers=headers,
+        f"{API_VERSION_PREFIX}/tasks/{task_id}", json={"final_date": new_final_date}
     )
 
 

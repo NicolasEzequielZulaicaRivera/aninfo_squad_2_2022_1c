@@ -19,6 +19,14 @@ def test_create_project_with_invalid_dates_should_fail():
     pass
 
 
+@scenario(
+    "../crear_proyecto.feature",
+    "Solicitud de datos durante la creación",
+)
+def test_create_project_with_no_data_should_fail():
+    pass
+
+
 @pytest.fixture
 def project():
     return {
@@ -26,13 +34,6 @@ def project():
         "description": "Proyecto de prueba",
         "initial_date": str(date(2022, 6, 22)),
         "final_date": str(date(2022, 6, 22)),
-    }
-
-
-@pytest.fixture
-def headers():
-    return {
-        "api_key": "key",
     }
 
 
@@ -65,18 +66,16 @@ def step_imp(project, final_date):
 
 
 @when('selecciono la opción "nuevo proyecto"', target_fixture="response")
-def response(client, headers, project):
-    return client.post(f"{API_VERSION_PREFIX}/projects/", json=project, headers=headers)
+def step_imp(client, project):
+    return client.post(f"{API_VERSION_PREFIX}/projects/", json=project)
 
 
 @then("se deberá crear el proyecto con los datos ingresados")
-def step_imp(client, headers, response, project):
+def step_imp(client, response, project):
     assert response.status_code == 200
     project_id = response.json()["id"]
 
-    response = client.get(
-        f"{API_VERSION_PREFIX}/projects/{project_id}", headers=headers
-    )
+    response = client.get(f"{API_VERSION_PREFIX}/projects/{project_id}")
     assert response.status_code == 200
     returned_project = response.json()
     assert returned_project["name"] == project["name"]
@@ -95,3 +94,15 @@ def step_impl(response):
 @given("la fecha de finalizacion esta en el pasado")
 def step_impl():
     project["final_date"] = str(TODAY_DATE - timedelta(days=1))
+
+
+@given("quiero crear un proyecto sin datos", target_fixture="project")
+def step_impl():
+    return {}
+
+
+@then(
+    "el sistema me solicitará el ingreso del nombre del proyecto, descripción, fecha de inicio y fecha de finalización"
+)
+def step_impl(response):
+    assert response.status_code == 422

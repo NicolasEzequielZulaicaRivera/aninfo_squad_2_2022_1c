@@ -8,40 +8,26 @@ Feature: estimar horas de tarea
 	Cuando agrego una estimación de horas
 	Entonces el sistema deberá agregar la estimación de horas a la tarea
 
-	- CA 2: Fallo al agregar una estimación de horas a una tarea con estimación
-	Dado que quiero agregar una estimación de horas a una tarea con estimación
-	Cuando intento agregar una estimación de horas
-	Entonces el sistema deberá indicar que no es posible agregar una estimación a
-	una tarea que ya tiene una estimación, sino que se debe modificar la estimación
-	existente
-
-	- CA 3: Fallo al agregar una estimación de horas a una tarea por valor inválido
+	- CA 2: Fallo al agregar una estimación de horas a una tarea por valor inválido
 	Dado que quiero agregar una estimación de horas a una tarea sin estimación
 	Cuando las horas trabajadas en la tarea es superior a las horas estimadas
 	Entonces el sistema deberá indicar que no fue posible agregar la estimación
 	porque las horas trabajadas hasta el momento es superior a la estimación
 
-	- CA 4: Modificar estimación de horas de tarea con estimación
+	- CA 3: Modificar estimación de horas de tarea con estimación
 	Dado que quiero modificar la estimación de horas de una tarea que ya tiene
 	estimación
 	Cuando modifico la estimación de horas
 	Entonces el sistema deberá modificar la estimación de horas de la tarea
 
-	- CA 5: Fallo al modificar la estimación de horas de una tarea sin estimación
-	Dado que quiero modificar la estimación de horas de una tarea que sin
-	estimación
-	Cuando intento modificar la estimación de horas
-	Entonces el sistema deberá indicar que no es posible modificar la estimación de
-	una tarea que no tiene una estimación
-
-	- CA 6: Fallo al modificar la estimación de horas por valor inválido
+	- CA 4: Fallo al modificar la estimación de horas por valor inválido
 	Dado que quiero modificar la estimación de horas de una tarea que ya tiene
 	estimación
 	Cuando las horas trabajadas en la tarea es superior a las horas estimadas
 	Entonces el sistema deberá indicar que no es posible modificar la estimación
 	porque las horas trabajadas hasta el momento es superior a la estimación
 
-	- CA 7:  Eliminar estimación de horas
+	- CA 5: Eliminar estimación de horas
 	Dado que quiero eliminar la estimación de horas de una tarea que tiene una
 	estimación
 	Cuando elimino la estimación de horas
@@ -56,7 +42,13 @@ Feature: estimar horas de tarea
 		When agrego una estimación de 40 horas a la tarea
 		Then el sistema deberá agregar la estimación de 40 horas a la tarea
 
-	Scenario: Fallo al agregar una estimación de horas a una tarea con estimación
+	Scenario: Eliminar estimación de horas
 		Given una tarea con estimacion de 40 horas
-		When agrego una estimación de 20 horas a la tarea
-		Then el sistema deberá indicar que no es posible agregar una estimación a una tarea que ya tiene una estimación
+		When elimino la estimación de horas de la tarea
+		Then el sistema deberá eliminar la estimación de horas de la tarea
+
+	Scenario: Modificar estimación de horas de tarea con estimación
+		Given una tarea con estimacion de 20 horas
+		When modifico una estimación de 40 horas a la tarea
+		Then el sistema deberá modificar la estimación de 40 horas a la tarea
+

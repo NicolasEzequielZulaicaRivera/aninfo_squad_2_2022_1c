@@ -27,16 +27,6 @@ def test_create_project_with_no_data_should_fail():
     pass
 
 
-@pytest.fixture
-def project():
-    return {
-        "name": "Proyecto de prueba",
-        "description": "Proyecto de prueba",
-        "initial_date": str(date(2022, 6, 22)),
-        "final_date": str(date(2022, 6, 22)),
-    }
-
-
 @given("quiero crear un proyecto")
 def step_impl(project):
     pass
@@ -92,7 +82,7 @@ def step_impl(response):
 
 
 @given("la fecha de finalizacion esta en el pasado")
-def step_impl():
+def step_impl(project):
     project["final_date"] = str(TODAY_DATE - timedelta(days=1))
 
 

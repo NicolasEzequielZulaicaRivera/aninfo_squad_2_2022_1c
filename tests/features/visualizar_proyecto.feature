@@ -23,3 +23,17 @@ Feature: visualizar proyecto
 	Entonces el sistema me deberá mostrar el proyecto cuyo nombre coincide con el
 	nombre ingresado
 	"""
+
+
+	Scenario: Visualizacion de atributos basicos de proyecto
+		Given un proyecto creado
+		When selecciono el proyecto
+		Then el sistema debera mostrar la informacion basica del proyecto
+
+
+	Scenario: Visualizacion de tareas de un proyecto
+		Given un proyecto creado
+		And el proyecto tiene tareas
+		When selecciono el proyecto
+		Then el sistema debera mostrar las tareas del proyecto con su informacion basica
+

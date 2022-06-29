@@ -15,3 +15,8 @@ Feature: visualizar tarea
 	Entonces el sistema me deberá mostrar la tarea cuyo nombre coincide con el
 	nombre ingresado
 	"""
+
+	Scenario: Visualizacion de atributos basicos de tarea
+		Given una tarea
+		When selecciono la tarea
+		Then el sistema deberá mostrar la informacion basica de la tarea

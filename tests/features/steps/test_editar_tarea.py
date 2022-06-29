@@ -3,8 +3,6 @@ from datetime import datetime
 from pytest_bdd import scenario, given, when, then, parsers
 
 from src.constants import API_VERSION_PREFIX
-from tests.features.steps.test_crear_tarea import task
-from tests.features.steps.test_crear_proyecto import project
 
 
 @scenario("../editar_tarea.feature", "Edicion del nombre de la tarea")

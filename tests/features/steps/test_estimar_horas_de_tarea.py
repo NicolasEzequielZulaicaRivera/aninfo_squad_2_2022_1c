@@ -13,9 +13,17 @@ def test_agregar_estimacion_de_horas():
 
 @scenario(
     "../estimar_horas_de_tarea.feature",
-    "Fallo al agregar una estimación de horas a una tarea con estimación",
+    "Eliminar estimación de horas",
 )
-def test_fallo_agregar_estimacion_de_horas_a_tarea_con_estimacion():
+def test_eliminar_estimacion_de_horas():
+    pass
+
+
+@scenario(
+    "../estimar_horas_de_tarea.feature",
+    "Modificar estimación de horas de tarea con estimación",
+)
+def test_modificar_estimacion_de_horas_de_tarea_con_estimacion():
     pass
 
 
@@ -70,8 +78,47 @@ def step_impl(client, task, estimated_hours):
     return response.json()["id"]
 
 
-@then(
-    "el sistema deberá indicar que no es posible agregar una estimación a una tarea que ya tiene una estimación"
+@when(
+    "elimino la estimación de horas de la tarea", target_fixture="updated_task_response"
 )
-def step_impl(estimated_hours_response):
-    assert estimated_hours_response.status_code == 400
+def step_impl(client, task_id, task):
+    task["estimated_hours"] = None
+    return client.put(API_VERSION_PREFIX + "/tasks/{}".format(task_id), json=task)
+
+
+@then("el sistema deberá eliminar la estimación de horas de la tarea")
+def step_impl(task, updated_task_response):
+    task_info = updated_task_response.json()
+    assert updated_task_response.status_code == 200
+    assert task_info["name"] == task["name"]
+    assert task_info["initial_date"] == task["initial_date"]
+    assert task_info["final_date"] == task["final_date"]
+    assert task_info["description"] == task["description"]
+    assert task_info["estimated_hours"] is None
+
+
+@when(
+    parsers.parse("modifico una estimación de {estimated_hours:d} horas a la tarea"),
+    target_fixture="updated_task_response",
+)
+def step_impl(client, estimated_hours, task, task_id):
+    task["estimated_hours"] = estimated_hours
+    return client.put(
+        API_VERSION_PREFIX + "/tasks/{}".format(task_id),
+        json=task,
+    )
+
+
+@then(
+    parsers.parse(
+        "el sistema deberá modificar la estimación de {new_estimated_hours:d} horas a la tarea"
+    )
+)
+def step_impl(updated_task_response, new_estimated_hours, task):
+    task_info = updated_task_response.json()
+    assert updated_task_response.status_code == 200
+    assert task_info["estimated_hours"] == new_estimated_hours
+    assert task_info["name"] == task["name"]
+    assert task_info["initial_date"] == task["initial_date"]
+    assert task_info["final_date"] == task["final_date"]
+    assert task_info["description"] == task["description"]

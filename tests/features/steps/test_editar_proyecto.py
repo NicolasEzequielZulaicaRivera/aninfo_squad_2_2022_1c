@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from pytest_bdd import scenario, given, when, then, parsers
-from tests.features.steps.test_crear_proyecto import project
 from src.constants import API_VERSION_PREFIX
 
 

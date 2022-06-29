@@ -1,6 +1,4 @@
 from pytest_bdd import scenario, given, when, then
-from tests.features.steps.test_crear_proyecto import project
-from tests.features.steps.test_crear_tarea import task
 from src.main import API_VERSION_PREFIX
 
 

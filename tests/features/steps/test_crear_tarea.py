@@ -1,9 +1,7 @@
 from datetime import date, datetime
 from pytest_bdd import scenario, given, when, then, parsers
-import pytest
 
 from src.constants import API_VERSION_PREFIX
-from tests.features.steps.test_crear_proyecto import project
 
 
 @scenario("../crear_tarea.feature", "Crear tarea en proyecto")
@@ -37,16 +35,6 @@ def test_fallo_en_la_creacion_por_fecha_de_inicio_posterior_a_la_fecha_de_finali
 )
 def test_crear_tarea_con_datos_vacios_en_proyecto():
     pass
-
-
-@pytest.fixture
-def task():
-    return {
-        "name": "Tarea 1",
-        "description": "Tarea de prueba",
-        "initial_date": str(date(2022, 6, 22)),
-        "final_date": str(date(2022, 6, 22)),
-    }
 
 
 @given("un proyecto creado", target_fixture="project_post_response")

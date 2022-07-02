@@ -23,14 +23,14 @@ Feature: remover recursos de tarea
 	Dado que no tengo los permisos necesarios para remover un recurso de una tarea,
 	Cuando selecciono la opción "remover recurso",
 	Entonces el sistema deberá indicar que no tengo los permisos necesarios para
-	realizar dicha acción (No MVP)
+	realizar dicha acción
 
 	"""
 
 	Scenario: Remocion de recurso de tarea en la que colabora
 		Given una tarea en la que colabora el recurso con legajo 5
 		When selecciono la opcion "remover recurso" e ingreso el legajo 5
-		Then el sistema debera indicar que el recurso con legajo 5 ya es colaborador de la tarea
+		Then el sistema debera indicar que el recurso con legajo 5 ya no es colaborador de la tarea
 
 	Scenario: Fallo al remover un recurso no asignado a una tarea
 		Given una tarea sin colaboradores

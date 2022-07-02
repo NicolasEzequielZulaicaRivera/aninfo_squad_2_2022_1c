@@ -24,7 +24,7 @@ Feature: editar proyecto
 	Dado que no tengo los permisos necesarios para editar un proyecto,
 	Cuando selecciono la opción "editar proyecto",
 	Entonces el sistema deberá indicar que no tengo los permisos necesarios para
-	realizar dicha acción (No MVP)
+	realizar dicha acción
 
 	"""
 

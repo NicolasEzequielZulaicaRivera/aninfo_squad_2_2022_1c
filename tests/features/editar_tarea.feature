@@ -24,7 +24,7 @@ Feature: editar tarea
 	Dado que no tengo los permisos necesarios para editar una tarea,
 	Cuando selecciono la opción "editar tarea",
 	Entonces el sistema deberá indicar que no tengo los permisos necesarios para
-	realizar dicha acción (No MVP)
+	realizar dicha acción
 
 	"""
 

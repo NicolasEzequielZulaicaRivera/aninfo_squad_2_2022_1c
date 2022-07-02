@@ -54,7 +54,7 @@ def step_impl(client, collaborator_id, task_id):
 
 @then(
     parsers.parse(
-        "el sistema debera indicar que el recurso con legajo {collaborator_id} ya es colaborador de la tarea"
+        "el sistema debera indicar que el recurso con legajo {collaborator_id} ya no es colaborador de la tarea"
     )
 )
 def step_impl(client, task_id, task_remove_collaborator_response, collaborator_id):

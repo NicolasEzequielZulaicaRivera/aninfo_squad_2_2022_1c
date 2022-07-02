@@ -3,7 +3,6 @@ from src import schemas
 from sqlalchemy.orm import Session
 from src.postgres.database import get_db
 from src.postgres import models
-from src import utils
 from typing import List
 
 from src.utils import project_utils
@@ -73,19 +72,6 @@ def edit_project(
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Initial date must be before final date",
-        )
-
-    if project_update.finished is True and project.finished is True:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Project already finished",
-        )
-    if project_update.finished is True and any(
-        task.finished is False for task in project.tasks
-    ):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Project cannot be finished until all tasks are finished",
         )
 
     project_update = project_update.dict(exclude_unset=True)

@@ -3,7 +3,7 @@ Feature: asignar responsable de tarea
 	Como empleado, quiero asignar un responsable a una tarea, para indicar que es
 	responsable de que se realice la tarea
 
-	- CA 1: Solicitud de datos del responsable a asignar
+	- [x] CA 1: Solicitud de datos del responsable a asignar
 	Dado que quiero asignar un responsable a una tarea,
 	Cuando selecciono la opción "asignar responsable",
 	Entonces el sistema deberá solicitar el legajo del empleado que quiero hacer
@@ -25,7 +25,7 @@ Feature: asignar responsable de tarea
 	tarea,
 	Cuando selecciono la opción "asignar responsable",
 	Entonces el sistema deberá indicar que no tengo los permisos necesarios para
-	realizar dicha acción
+	realizar dicha acción (No MVP)
 
 	"""
 	Scenario: Solicitud de datos del responsable a asignar

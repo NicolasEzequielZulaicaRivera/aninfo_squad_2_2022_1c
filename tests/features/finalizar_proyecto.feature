@@ -6,17 +6,18 @@ Feature: finalizar proyecto
 	Dado que existe un proyecto sin finalizar sin tareas no finalizadas,
 	Cuando selecciono la opción "finalizar proyecto",
 	Entonces el sistema deberá marcar el proyecto como "finalizado"
-	- CA 2: Fallo al finalizar un proyecto ya finalizado
+
+	- CA 2: Advertencia al finalizar un proyecto ya finalizado
 	Dado que existe un proyecto finalizado,
 	Cuando selecciono la opción "finalizar proyecto",
-	Entonces el sistema deberá indicar que no es posible finalizar un proyecto ya
-	finalizado
+	Entonces el sistema deberá advertirme que estoy intentando finalizar un
+	proyecto ya finalizado
 
-	- CA 3: Fallo al finalizar un proyecto con tareas no finalizadas
+	- CA 3: Advertencia al finalizar un proyecto con tareas no finalizadas
 	Dado que existe un proyecto sin finalizar con tareas no finalizadas,
 	Cuando selecciono la opción "finalizar proyecto",
-	Entonces el sistema deberá indicar que no es posible finalizar un proyecto con
-	tareas no finalizadas
+	Entonces el sistema deberá advertirme que estoy intentando finalizar un
+	proyecto con tareas no finalizadas
 
 	- CA 4: Fallo al finalizar un proyecto por permisos inválidos (No MVP)
 	Dado que no tengo los permisos necesarios para finalizar un proyecto,
@@ -29,15 +30,3 @@ Feature: finalizar proyecto
 		Given un proyecto creado
 		When selecciono la opción "finalizar proyecto"
 		Then el sistema deberá marcar el proyecto como "finalizado"
-
-	Scenario: Fallo al finalizar un proyecto ya finalizado
-		Given un proyecto creado
-		And el proyecto ya está finalizado
-		When selecciono la opción "finalizar proyecto"
-		Then el sistema deberá indicar que no es posible finalizar un proyecto ya finalizado
-
-	Scenario: Fallo al finalizar un proyecto con tareas no finalizadas
-		Given un proyecto creado
-		And el proyecto tiene tareas no finalizadas
-		When selecciono la opción "finalizar proyecto"
-		Then el sistema deberá indicar que no es posible finalizar un proyecto con tareas no finalizadas

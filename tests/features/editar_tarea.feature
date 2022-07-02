@@ -3,13 +3,13 @@ Feature: editar tarea
 	Como empleado, quiero editar los atributos una tarea, para actualizar la
 	información de la tarea
 
-	- CA 1: Solicitud de datos de edición de tarea
+	- [x] CA 1: Solicitud de datos de edición de tarea
 	Dado que quiero editar una tarea,
 	Cuando selecciono la opción "editar tarea"
 	Entonces el sistema permitirá editar el nombre de la tarea, descripción, fecha
 	de inicio y fecha de finalización
 
-	- CA 2: Edición de tarea exitosa
+	- [x] CA 2: Edición de tarea exitosa
 	Dado que ingresé los datos que deseo editar,
 	Cuando selecciono la opción "confirmar edición",
 	Entonces los cambios en la tarea se verán reflejados en el sistema
@@ -24,7 +24,8 @@ Feature: editar tarea
 	Dado que no tengo los permisos necesarios para editar una tarea,
 	Cuando selecciono la opción "editar tarea",
 	Entonces el sistema deberá indicar que no tengo los permisos necesarios para
-	realizar dicha acción
+	realizar dicha acción (No MVP)
+
 	"""
 
 	Scenario: Edicion del nombre de la tarea

@@ -1,6 +1,15 @@
 from typing import List
-from src.schemas.resource import ResourcePost, ResourceUpdate, ResourceGet
+from src.schemas.resource import (
+    ResourcePost,
+    ResourceUpdate,
+    ResourceGet,
+    COMMON_STATES,
+)
 from src.schemas.task import TaskGetProjectById
+
+
+STATES = COMMON_STATES
+STATES += ["cancelado", "bloqueado", "finalizado"]
 
 
 class ProjectPostExample:
@@ -29,11 +38,15 @@ class ProjectGetExample:
 
 
 class ProjectPost(ResourcePost, ProjectPostExample):
-    pass
+    @staticmethod
+    def valid_states():
+        return STATES
 
 
 class ProjectUpdate(ResourceUpdate, ProjectPostExample):
-    pass
+    @staticmethod
+    def valid_states() -> List[str]:
+        return STATES
 
 
 class ProjectGet(ResourceGet, ProjectGetExample):

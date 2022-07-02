@@ -1,9 +1,8 @@
-import pytest
 from pytest_bdd import scenario, given, when, then, parsers
 
 from src.constants import TODAY_DATE
 from src.main import API_VERSION_PREFIX
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 
 
 @scenario("../crear_proyecto.feature", "Creacion exitosa de proyecto")

@@ -3,13 +3,13 @@ Feature: editar proyecto
 	Como empleado, quiero editar los atributos un proyecto, para actualizar la
 	información del proyecto
 
-	- CA 1: Solicitud de datos de edición de proyecto
+	- [x] CA 1: Solicitud de datos de edición de proyecto
 	Dado que quiero editar un proyecto
 	Cuando selecciono la opción "editar proyecto"
 	Entonces el sistema permitirá editar el nombre del proyecto, descripción, fecha
 	de inicio y fecha de finalización
 
-	- CA 2: Edición de proyecto exitosa
+	- [x] CA 2: Edición de proyecto exitosa
 	Dado que ingresé los datos que deseo editar,
 	Cuando selecciono la opción "confirmar edición",
 	Entonces los cambios en el proyecto se verán reflejados en el sistema

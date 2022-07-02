@@ -67,12 +67,6 @@ def edit_task(
             detail="Initial date cannot be greater than final date",
         )
 
-    if task_update.finished is True and task.finished is True:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Task already finished",
-        )
-
     task_update = task_update.dict(exclude_unset=True)
 
     for task_attr in task_update:

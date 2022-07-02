@@ -1,8 +1,24 @@
 from typing import Optional, List
 from fastapi import Body
+from pydantic import validator
 
 from .employee import EmployeeInfo
-from .resource import ResourcePost, ResourceUpdate, ResourceGet, ResourceInfo
+from .resource import (
+    ResourcePost,
+    ResourceUpdate,
+    ResourceGet,
+    ResourceInfo,
+    COMMON_STATES,
+)
+
+
+STATES = COMMON_STATES
+STATES += [
+    "cancelada",
+    "bloqueada",
+    "iniciada",
+    "finalizada",
+]
 
 
 class TaskExample:
@@ -25,9 +41,17 @@ class TaskInfo(ResourceInfo):
 class TaskPost(ResourcePost, TaskExample):
     estimated_hours: Optional[int] = Body(None, ge=0)
 
+    @staticmethod
+    def valid_states():
+        return STATES
+
 
 class TaskUpdate(ResourceUpdate, TaskExample):
     estimated_hours: Optional[int] = Body(None, ge=0)
+
+    @staticmethod
+    def valid_states() -> List[str]:
+        return STATES
 
 
 class ProjectInfo(ResourceInfo):

@@ -70,6 +70,7 @@ def project():
         "description": "Proyecto de prueba",
         "initial_date": str(date(2022, 6, 22)),
         "final_date": str(date(2022, 6, 22)),
+        "state": "sin iniciar",
     }
 
 
@@ -80,4 +81,5 @@ def task():
         "description": "Tarea de prueba",
         "initial_date": str(date(2022, 6, 22)),
         "final_date": str(date(2022, 6, 22)),
+        "state": "sin iniciar",
     }

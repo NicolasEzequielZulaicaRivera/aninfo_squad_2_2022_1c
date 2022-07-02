@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 from pytest_bdd import scenario, given, when, then, parsers
 
 from src.constants import API_VERSION_PREFIX

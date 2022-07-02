@@ -23,7 +23,8 @@ Feature: remover recursos de tarea
 	Dado que no tengo los permisos necesarios para remover un recurso de una tarea,
 	Cuando selecciono la opción "remover recurso",
 	Entonces el sistema deberá indicar que no tengo los permisos necesarios para
-	realizar dicha acción
+	realizar dicha acción (No MVP)
+
 	"""
 
 	Scenario: Remocion de recurso de tarea en la que colabora

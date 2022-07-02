@@ -1,7 +1,10 @@
+from abc import ABC, abstractmethod
 from datetime import date
 from pydantic import BaseModel, validator
-from typing import Optional
+from typing import Optional, List
 from fastapi import HTTPException, status
+
+COMMON_STATES = ["sin iniciar", "en progreso"]
 
 
 class ResourceInfo(BaseModel):
@@ -12,11 +15,26 @@ class ResourceInfo(BaseModel):
         orm_mode = True
 
 
-class ResourcePost(BaseModel):
+class ResourcePost(BaseModel, ABC):
     name: str
     description: str
     initial_date: date
     final_date: date
+    state: str = "sin iniciar"
+
+    @staticmethod
+    @abstractmethod
+    def valid_states() -> List[str]:
+        pass
+
+    @validator("state")
+    def validate_state(cls, v, values):
+        if v not in cls.valid_states():
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="State must be one of: {}".format(", ".join(cls.valid_states())),
+            )
+        return v
 
     @validator("final_date")
     def validate_final_date(
@@ -38,12 +56,33 @@ class ResourceUpdate(BaseModel):
     description: Optional[str]
     initial_date: Optional[date]
     final_date: Optional[date]
-    finished: Optional[bool]
+    state: Optional[str]
+
+    @staticmethod
+    @abstractmethod
+    def valid_states() -> List[str]:
+        pass
+
+    @validator("state")
+    def validate_state(cls, v, values):
+        if v not in cls.valid_states():
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="State must be one of: {}".format(", ".join(cls.valid_states())),
+            )
+        return v
 
     class Config:
         orm_mode = True
 
 
-class ResourceGet(ResourcePost):
+class ResourceGet(BaseModel):
     id: int
-    finished: bool
+    name: str
+    description: str
+    initial_date: date
+    final_date: date
+    state: str
+
+    class Config:
+        orm_mode = True

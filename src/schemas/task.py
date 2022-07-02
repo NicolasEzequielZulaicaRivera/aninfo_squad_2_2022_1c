@@ -1,6 +1,5 @@
 from typing import Optional, List
 from fastapi import Body
-from pydantic import validator
 
 from .employee import EmployeeInfo
 from .resource import (

@@ -28,7 +28,7 @@ class ResourcePost(BaseModel, ABC):
         pass
 
     @validator("state")
-    def validate_state(cls, v, values):
+    def validate_state(cls, v, values):  # pylint: disable=unused-argument, no-self-argument
         if v not in cls.valid_states():
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -64,7 +64,7 @@ class ResourceUpdate(BaseModel):
         pass
 
     @validator("state")
-    def validate_state(cls, v, values):
+    def validate_state(cls, v, values):  # pylint: disable=unused-argument, no-self-argument
         if v not in cls.valid_states():
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,

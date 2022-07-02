@@ -19,7 +19,6 @@ class ResourceModel(Base):
     description = Column(String, nullable=False)
     initial_date = Column(Date, nullable=False)
     final_date = Column(Date, nullable=False)
-    finished = Column(Boolean, nullable=False, default=False)
     state = Column(String, nullable=False)
 
 

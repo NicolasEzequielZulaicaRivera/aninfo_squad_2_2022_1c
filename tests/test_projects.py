@@ -1,27 +1,27 @@
 from src.constants import API_VERSION_PREFIX
+from tests import utils
 
 
 def test_get_projects_should_return_no_projects(client):
-    response = client.get(API_VERSION_PREFIX + "/projects/")
+    response = utils.get_projects(client, unwrap=False)
     assert response.status_code == 200
     assert response.json() == []
 
 
 def test_get_project_by_id_should_return_no_project(client):
-    response = client.get(API_VERSION_PREFIX + "/projects/1")
+    response = utils.get_project(client, 1, unwrap=False)
     assert response.status_code == 404
     assert response.json() == {"detail": "Project not found"}
 
 
 def test_create_project_should_return_created_project_with_no_tasks(client):
-    response = client.post(
-        API_VERSION_PREFIX + "/projects/",
-        json={
-            "name": "Proyecto secreto",
-            "description": "Descripcion del proyecto",
-            "initial_date": "2022-06-12",
-            "final_date": "2022-06-20",
-        },
+    response = utils.post_project(
+        client,
+        name="Proyecto secreto",
+        description="Descripcion del proyecto",
+        initial_date="2022-06-12",
+        final_date="2022-06-20",
+        unwrap_id=False,
     )
     assert response.status_code == 200
     project = response.json()
@@ -33,24 +33,23 @@ def test_create_project_should_return_created_project_with_no_tasks(client):
 
 
 def test_can_exist_projects_with_same_name(client):
-    client.post(
-        API_VERSION_PREFIX + "/projects/",
-        json={
-            "name": "Proyecto secreto",
-            "description": "Descripcion del proyecto",
-            "initial_date": "2022-06-12",
-            "final_date": "2022-06-20",
-        },
+    utils.post_project(
+        client,
+        name="Proyecto secreto",
+        description="Descripcion del proyecto",
+        initial_date="2022-06-12",
+        final_date="2022-06-20",
     )
-    response = client.post(
-        API_VERSION_PREFIX + "/projects/",
-        json={
-            "name": "Proyecto secreto",
-            "description": "Descripcion del proyecto",
-            "initial_date": "2022-06-12",
-            "final_date": "2022-06-30",
-        },
+
+    response = utils.post_project(
+        client,
+        name="Proyecto secreto",
+        description="Descripcion del proyecto",
+        initial_date="2022-06-12",
+        final_date="2022-06-30",
+        unwrap_id=False,
     )
+
     assert response.status_code == 200
     project = response.json()
     assert project["id"] == 2
@@ -61,16 +60,15 @@ def test_can_exist_projects_with_same_name(client):
 
 
 def test_get_project_after_it_was_created(client):
-    client.post(
-        API_VERSION_PREFIX + "/projects/",
-        json={
-            "name": "Proyecto secreto",
-            "description": "Descripcion del proyecto",
-            "initial_date": "2022-06-12",
-            "final_date": "2022-06-20",
-        },
+    project_id = utils.post_project(
+        client,
+        name="Proyecto secreto",
+        description="Descripcion del proyecto",
+        initial_date="2022-06-12",
+        final_date="2022-06-20",
     )
-    response = client.get(API_VERSION_PREFIX + "/projects/1")
+
+    response = utils.get_project(client, project_id, unwrap=False)
     assert response.status_code == 200
     project = response.json()
     assert project["id"] == 1
@@ -81,17 +79,16 @@ def test_get_project_after_it_was_created(client):
 
 
 def test_edit_project_should_return_edited_project(client):
-    client.post(
-        API_VERSION_PREFIX + "/projects/",
-        json={
-            "name": "Proyecto secreto",
-            "description": "Descripcion del proyecto",
-            "initial_date": "2022-06-12",
-            "final_date": "2022-06-20",
-        },
+    project_id = utils.post_project(
+        client,
+        name="Proyecto secreto",
+        description="Descripcion del proyecto",
+        initial_date="2022-06-12",
+        final_date="2022-06-20",
     )
+
     response = client.put(
-        API_VERSION_PREFIX + "/projects/1",
+        f"{API_VERSION_PREFIX}/projects/{project_id}",
         json={
             "name": "Proyecto secreto editado",
             "description": "Descripcion actualizada",
@@ -110,17 +107,16 @@ def test_edit_project_should_return_edited_project(client):
 
 
 def test_delete_project_should_not_return_project(client):
-    client.post(
-        API_VERSION_PREFIX + "/projects/",
-        json={
-            "name": "Proyecto",
-            "description": "Descripcion del proyecto",
-            "initial_date": "2022-06-12",
-            "final_date": "2022-06-20",
-        },
+    project_id = utils.post_project(
+        client,
+        name="Proyecto",
+        description="Descripcion del proyecto",
+        initial_date="2022-06-12",
+        final_date="2022-06-20",
     )
-    response = client.delete(API_VERSION_PREFIX + "/projects/1")
+
+    response = utils.delete_project(client, project_id)
     assert response.status_code == 200
-    response = client.get(API_VERSION_PREFIX + "/projects/1")
+    response = utils.get_project(client, project_id, unwrap=False)
     assert response.status_code == 404
     assert response.json() == {"detail": "Project not found"}

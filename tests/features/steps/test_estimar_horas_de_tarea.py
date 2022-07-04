@@ -27,6 +27,14 @@ def test_modificar_estimacion_de_horas_de_tarea_con_estimacion():
     pass
 
 
+@scenario(
+    "../estimar_horas_de_tarea.feature",
+    "Fallo al agregar una estimación de horas a una tarea por valor inválido",
+)
+def test_agregar_estimacion_negativa_a_una_tarea():
+    pass
+
+
 @given("un proyecto creado", target_fixture="project_post_response")
 def step_impl(client, project):
     return client.post(f"{API_VERSION_PREFIX}/projects/", json=project)
@@ -122,3 +130,10 @@ def step_impl(updated_task_response, new_estimated_hours, task):
     assert task_info["initial_date"] == task["initial_date"]
     assert task_info["final_date"] == task["final_date"]
     assert task_info["description"] == task["description"]
+
+
+@then(
+    "el sistema deberá indicar que no fue posible agregar la estimación porque esta debe ser mayor o igual a 0"
+)
+def step_impl(estimated_hours_response):
+    assert estimated_hours_response.status_code == 422

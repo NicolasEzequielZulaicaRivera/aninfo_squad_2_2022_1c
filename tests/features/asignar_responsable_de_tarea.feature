@@ -25,7 +25,7 @@ Feature: asignar responsable de tarea
 	tarea,
 	Cuando selecciono la opción "asignar responsable",
 	Entonces el sistema deberá indicar que no tengo los permisos necesarios para
-	realizar dicha acción (No MVP)
+	realizar dicha acción
 
 	"""
 	Scenario: Solicitud de datos del responsable a asignar

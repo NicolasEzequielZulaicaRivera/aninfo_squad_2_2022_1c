@@ -10,9 +10,8 @@ Feature: estimar horas de tarea
 
 	- CA 2: Fallo al agregar una estimación de horas a una tarea por valor inválido
 	Dado que quiero agregar una estimación de horas a una tarea sin estimación
-	Cuando las horas trabajadas en la tarea es superior a las horas estimadas
-	Entonces el sistema deberá indicar que no fue posible agregar la estimación
-	porque las horas trabajadas hasta el momento es superior a la estimación
+	Cuando intento agregar una estimación de horas menor a 0
+	Entonces el sistema deberá indicar que no fue posible agregar la estimación porque esta debe ser mayor o igual a 0
 
 	- CA 3: Modificar estimación de horas de tarea con estimación
 	Dado que quiero modificar la estimación de horas de una tarea que ya tiene
@@ -28,11 +27,9 @@ Feature: estimar horas de tarea
 	una tarea que no tiene una estimación
 
 	- CA 5: Fallo al modificar la estimación de horas por valor inválido
-	Dado que quiero modificar la estimación de horas de una tarea que ya tiene
-	estimación
-	Cuando las horas trabajadas en la tarea es superior a las horas estimadas
-	Entonces el sistema deberá indicar que no es posible modificar la estimación
-	porque las horas trabajadas hasta el momento es superior a la estimación
+	Dado que quiero modificar la estimación de horas de una tarea que ya tiene estimación
+	Cuando intento modificar la estimación de horas con un valor menor a 0
+	Entonces el sistema deberá indicar que no fue posible modificar la estimación porque esta debe ser mayor o igual a 0
 
 	- CA 6:  Eliminar estimación de horas
 	Dado que quiero eliminar la estimación de horas de una tarea que tiene una
@@ -58,4 +55,9 @@ Feature: estimar horas de tarea
 		Given una tarea con estimacion de 20 horas
 		When modifico una estimación de 40 horas a la tarea
 		Then el sistema deberá modificar la estimación de 40 horas a la tarea
+
+	Scenario: Fallo al agregar una estimación de horas a una tarea por valor inválido
+		Given una tarea sin estimacion
+		When agrego una estimación de -8 horas a la tarea
+		Then el sistema deberá indicar que no fue posible agregar la estimación porque esta debe ser mayor o igual a 0
 

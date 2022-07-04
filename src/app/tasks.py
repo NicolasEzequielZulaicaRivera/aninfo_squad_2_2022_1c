@@ -6,7 +6,7 @@ from typing import List
 from src import schemas
 
 
-from src.utils import project_utils, task_utils
+from src.utils import project_utils, task_utils, employee_utils
 
 router = APIRouter(tags=["tasks"])
 
@@ -24,6 +24,12 @@ def post_task(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Initial date is greater than final date of project",
         )
+
+    if task.assigned_employee is not None:
+        assigned_employee = employee_utils.get_employee_by_id(
+            task.assigned_employee, pdb
+        )
+        task.assigned_employee = assigned_employee
 
     new_task = models.TaskModel(**task.dict(), project=project)
 
@@ -66,6 +72,12 @@ def edit_task(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Initial date cannot be greater than final date",
         )
+
+    if task_update.assigned_employee is not None:
+        assigned_employee = employee_utils.get_employee_by_id(
+            task_update.assigned_employee, pdb
+        )
+        task_update.assigned_employee = assigned_employee
 
     task_update = task_update.dict(exclude_unset=True)
 

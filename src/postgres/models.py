@@ -59,5 +59,7 @@ class EmployeeModel(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    assigned_tasks = relationship("TaskModel", back_populates="assigned_employee")
+    assigned_tasks = relationship(
+        "TaskModel", back_populates="assigned_employee", cascade="all, delete-orphan"
+    )
     tasks = relationship("TaskModel", secondary=task_collaborators_association_table)

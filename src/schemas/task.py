@@ -1,5 +1,6 @@
-from typing import Optional, List
+from typing import Optional, List, Any
 from fastapi import Body
+from pydantic.utils import GetterDict
 
 from .employee import EmployeeInfo
 from .resource import (
@@ -39,6 +40,7 @@ class TaskInfo(ResourceInfo):
 
 class TaskPost(ResourcePost, TaskExample):
     estimated_hours: Optional[int] = Body(None, ge=0)
+    assigned_employee: Optional[int] = Body(None)
 
     @staticmethod
     def valid_states():
@@ -47,6 +49,7 @@ class TaskPost(ResourcePost, TaskExample):
 
 class TaskUpdate(ResourceUpdate, TaskExample):
     estimated_hours: Optional[int] = Body(None, ge=0)
+    assigned_employee: Optional[int] = Body(None)
 
     @staticmethod
     def valid_states() -> List[str]:
@@ -61,14 +64,33 @@ class ProjectInfo(ResourceInfo):
         orm_mode = True
 
 
+class TaskGetter(GetterDict):
+    def get(self, key: Any, default: Any = None) -> Any:
+        if key == "assigned_employee":
+            if self._obj.assigned_employee is None:
+                return None
+            return self._obj.assigned_employee.id
+        else:
+            try:
+                return getattr(self._obj, key)
+            except (AttributeError, KeyError):
+                return default
+
+
 class TaskGet(ResourceGet):
     project: ProjectInfo
-    assigned_employee: Optional[EmployeeInfo]
+    assigned_employee: Optional[int]
     collaborators: List[EmployeeInfo]
     estimated_hours: Optional[int]
+
+    class Config:
+        getter_dict = TaskGetter
 
 
 class TaskGetProjectById(ResourceGet):
-    assigned_employee: Optional[EmployeeInfo]
+    assigned_employee: Optional[int]
     collaborators: List[EmployeeInfo]
     estimated_hours: Optional[int]
+
+    class Config:
+        getter_dict = TaskGetter

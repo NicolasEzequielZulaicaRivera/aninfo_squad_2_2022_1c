@@ -71,7 +71,7 @@ def step_impl(client, task_assign_employee_response, task_post_response, employe
     response = client.get(f"{API_VERSION_PREFIX}/tasks/{task_id}")
     returned_task = response.json()
     assert response.status_code == 200
-    assert returned_task["assigned_employee"]["id"] == employee_id
+    assert returned_task["assigned_employee"] == employee_id
 
 
 @given("una tarea con responsable")
